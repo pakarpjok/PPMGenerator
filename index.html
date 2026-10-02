@@ -19,8 +19,8 @@
 
     /* Backdrop Blur Modal */
     .modal-backdrop {
-      background-color: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(12px);
+      background-color: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(14px);
     }
 
     /* Custom Scrollbar for Form Sidebar */
@@ -32,11 +32,25 @@
       border-radius: 8px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: #94a3b8;
       border-radius: 8px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+      background: #64748b;
+    }
+
+    /* CSS Loading Button Spinner */
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid #ffffff;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Print & Word Export Professional Layout */
@@ -74,28 +88,25 @@
 </head>
 <body class="h-full text-slate-800 bg-slate-100 antialiased flex flex-col min-h-screen">
 
-  <!-- ================= PASSCODE / LOGIN OVERLAY (AUTHENTICATION) ================= -->
+  <!-- ================= PASSCODE / LOGIN OVERLAY ================= -->
   <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop transition-all duration-300">
     <div class="bg-white rounded-3xl shadow-2xl border border-slate-200/80 max-w-md w-full p-6 sm:p-8 space-y-6 relative overflow-hidden">
-      <!-- Background Accents -->
       <div class="absolute -top-12 -right-12 w-36 h-36 bg-blue-600/10 rounded-full blur-2xl pointer-events-none"></div>
       <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-indigo-600/10 rounded-full blur-2xl pointer-events-none"></div>
 
-      <!-- Modal Header -->
       <div class="text-center space-y-2 relative z-10">
         <div class="w-16 h-16 bg-gradient-to-tr from-slate-900 to-blue-900 text-white rounded-2xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/20 border border-slate-700/50">
-          <i data-lucide="shield-lock" class="w-8 h-8 text-blue-400"></i>
+          <i data-lucide="shield-check" class="w-8 h-8 text-blue-400"></i>
         </div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Akses Terkunci PPM Pro</h2>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Konsol Akses PPM Pro</h2>
         <p class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
-          Sistem Perencanaan Pembelajaran Mendalam berlisensi resmi. Masukkan kode rahasia Anda untuk membuka konsol.
+          Sistem Perencanaan Pembelajaran Mendalam (Deep Learning). Masukkan kode rahasia untuk membuka aplikasi.
         </p>
       </div>
 
-      <!-- Form Login -->
       <form id="authForm" onsubmit="handleAuthentication(event)" class="space-y-4 relative z-10">
         <div>
-          <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kata Kunci / Kode Akses</label>
+          <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kode Rahasia Akses</label>
           <div class="relative flex items-center">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <i data-lucide="key-round" class="w-4 h-4"></i>
@@ -103,7 +114,7 @@
             <input 
               type="password" 
               id="passcodeInput" 
-              placeholder="Masukkan kode rahasia..." 
+              placeholder="Masukkan kata sandi..." 
               class="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition"
               required
             >
@@ -111,26 +122,25 @@
               type="button" 
               onclick="togglePasswordVisibility()" 
               class="absolute right-2 p-1.5 text-slate-400 hover:text-slate-600 transition focus:outline-none"
-              title="Intip / Sembunyikan Kode"
+              title="Tampilkan / Sembunyikan Kode"
             >
               <i id="togglePassIcon" data-lucide="eye" class="w-5 h-5"></i>
             </button>
           </div>
         </div>
 
-        <!-- Alert Notification Box -->
         <div id="authAlert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
           <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-rose-600"></i>
           <span id="authAlertMsg">Kode sandi tidak valid! Silakan periksa kembali.</span>
         </div>
 
         <button type="submit" class="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 hover:from-blue-800 hover:to-slate-950 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm">
-          <i data-lucide="unlock" class="w-4 h-4"></i> Masuk Konsol Aplikasi
+          <i data-lucide="unlock" class="w-4 h-4"></i> Masuk Ke Konsol
         </button>
       </form>
       
       <div class="pt-3 border-t border-slate-100 text-center">
-        <p class="text-[11px] text-slate-400 font-medium">Platform Resmi Pengembangan Perangkat Ajar Kurikulum Merdeka</p>
+        <p class="text-[11px] text-slate-400 font-medium">Pengembangan Perangkat Ajar Kurikulum Merdeka Pro</p>
       </div>
     </div>
   </div>
@@ -138,7 +148,7 @@
   <!-- ================= MAIN APP INTERFACE ================= -->
   <div id="appContainer" class="hidden flex-col min-h-screen">
     
-    <!-- Navigation Header -->
+    <!-- Top Navigation Header -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md no-print">
       <div class="max-w-7xl mx-auto px-4 py-3.5 sm:px-6 flex flex-wrap justify-between items-center gap-3">
         
@@ -153,18 +163,18 @@
                 <i data-lucide="sparkles" class="w-3 h-3"></i> Premium Enterprise
               </span>
             </div>
-            <p class="text-xs text-slate-400 font-medium">Perancangan Pembelajaran Mendalam (Deep Learning) Kurikulum Merdeka</p>
+            <p class="text-xs text-slate-400 font-medium">Platform Perencanaan Pembelajaran Mendalam (Deep Learning)</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <button type="button" onclick="loadSampleData()" class="text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition" title="Isi otomatis dengan contoh Sepak Bola">
+          <button type="button" onclick="loadSampleData()" class="text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
             <i data-lucide="wand-2" class="w-4 h-4 text-blue-400"></i> Contoh Sepak Bola
           </button>
           <button type="button" onclick="resetForm()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
-            <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-400"></i> Reset Form
+            <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-400"></i> Reset
           </button>
-          <button type="button" onclick="lockSession()" class="text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-xl flex items-center gap-1.5 transition" title="Keluar / Kunci Konsol">
+          <button type="button" onclick="lockSession()" class="text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-xl flex items-center gap-1.5 transition" title="Kunci Aplikasi">
             <i data-lucide="lock" class="w-4 h-4"></i> Keluar
           </button>
         </div>
@@ -175,7 +185,7 @@
     <!-- Main Workspace Grid -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow w-full">
       
-      <!-- ================= PANEL INPUT FORM (5 COLUMNS) ================= -->
+      <!-- ================= PANEL FORM INPUT (5 COLUMNS) ================= -->
       <div class="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl shadow-xl border border-slate-200 space-y-5 h-fit max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar no-print">
         
         <div class="border-b border-slate-100 pb-3 flex items-center justify-between sticky top-0 bg-white z-10 pt-1">
@@ -240,19 +250,19 @@
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-2.5 text-xs text-blue-900 flex items-start gap-2">
               <i data-lucide="clock" class="w-4 h-4 text-blue-600 shrink-0 mt-0.5"></i>
               <div>
-                <span class="block text-[10px] font-bold text-blue-800 uppercase tracking-wide">Kalkulasi Alokasi Waktu</span>
-                <p id="alokasiWaktuPreview" class="font-bold text-slate-800 mt-0.5">Isi pertemuan dan JP untuk menghitung total waktu</p>
+                <span class="block text-[10px] font-bold text-blue-800 uppercase tracking-wide">Kalkulasi Waktu Otomatis</span>
+                <p id="alokasiWaktuPreview" class="font-bold text-slate-800 mt-0.5">Isi pertemuan dan JP untuk kalkulasi durasi</p>
               </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Capaian Pembelajaran (CP)</label>
-              <textarea id="cp" rows="3" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="contoh: Murid menyesuaikan dan memodifikasi keterampilan gerak melintasi berbagai situasi gerak..."></textarea>
+              <textarea id="cp" rows="3" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="Tuliskan deskripsi Capaian Pembelajaran..."></textarea>
             </div>
             
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Tujuan Pembelajaran (TP)</label>
-              <textarea id="tp" rows="2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="contoh: Murid mampu mempraktikkan cara menendang dan menghentikan bola secara terampil dan bergotong royong..."></textarea>
+              <textarea id="tp" rows="2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="Tuliskan deskripsi Tujuan Pembelajaran..."></textarea>
             </div>
           </div>
 
@@ -274,7 +284,7 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Murid</label>
-                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Reguler dengan variasi kemampuan">
+                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Reguler variatif">
               </div>
             </div>
 
@@ -298,11 +308,11 @@
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Sarana, Prasarana & Tautan Video</label>
               <input type="text" id="sarana" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none mb-2" placeholder="contoh: Lapangan, Bola, Cone, Peluit">
-              <input type="text" id="videoLink" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Tautan Video YouTube (https://youtu.be/xxx)">
+              <input type="text" id="videoLink" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="Tautan Video Pembelajaran (URL YouTube)">
             </div>
           </div>
 
-          <!-- SECTION 3: 8 DIMENSI PROFIL LULUSAN (DPL) -->
+          <!-- SECTION 3: 8 DIMENSI PROFIL LULUSAN -->
           <div class="space-y-2.5 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
             <div class="flex items-center justify-between border-b border-slate-200 pb-2">
               <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
@@ -354,7 +364,7 @@
             </div>
           </div>
 
-          <!-- SECTION 4: DATA ADMINISTRASI & TTD -->
+          <!-- SECTION 4: DATA ADMINISTRASI & PENGESAHAN -->
           <div class="space-y-3 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
             <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <i data-lucide="file-signature" class="w-4 h-4 text-blue-600"></i> 4. Pengesahan & Tanda Tangan
@@ -394,10 +404,16 @@
             </div>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-700/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm">
-            <i data-lucide="file-check-2" class="w-5 h-5"></i> Generate Dokumen PPM Resmi
-          </button>
+          <!-- SUBMIT BUTTON WITH PREMIUM LOADING ANIMATION -->
+          <div class="space-y-1.5">
+            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 hover:from-blue-800 hover:to-slate-950 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-700/20 transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm disabled:opacity-70 disabled:cursor-not-allowed">
+              <span id="btnSpinner" class="hidden spinner"></span>
+              <i id="btnIcon" data-lucide="file-check-2" class="w-5 h-5"></i>
+              <span id="btnText">Generate Dokumen PPM Resmi</span>
+            </button>
+            <p id="loadingStatusText" class="text-center text-[11px] font-bold text-indigo-600 h-4 transition-all duration-300"></p>
+          </div>
+
         </form>
 
       </div>
@@ -405,7 +421,6 @@
       <!-- ================= PANEL PREVIEW & EXPORT (7 COLUMNS) ================= -->
       <div class="lg:col-span-7 space-y-4">
         
-        <!-- Header Controls Preview -->
         <div class="flex flex-wrap items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm gap-3 no-print">
           <div class="flex items-center gap-2">
             <div class="p-2 bg-blue-50 text-blue-700 rounded-lg border border-blue-100">
@@ -413,7 +428,7 @@
             </div>
             <div>
               <h2 class="text-sm font-bold text-slate-900">Pratinjau Dokumen PPM (Deep Learning)</h2>
-              <p class="text-[11px] text-slate-500">Tampilan hasil siap cetak dan ekspor resmi</p>
+              <p class="text-[11px] text-slate-500">Tampilan dokumen hasil rapi, bersih, dan konsisten</p>
             </div>
           </div>
           
@@ -427,14 +442,13 @@
           </div>
         </div>
 
-        <!-- Document Render Area -->
         <div id="outputContainer" class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xl min-h-[700px] text-slate-900 text-sm leading-relaxed overflow-x-auto">
           <div class="flex flex-col items-center justify-center h-96 text-slate-400 text-center p-6 no-print">
             <div class="p-4 bg-slate-100 rounded-2xl mb-3 border border-slate-200/80 shadow-inner">
               <i data-lucide="file-spreadsheet" class="w-12 h-12 stroke-1 text-slate-400"></i>
             </div>
             <h3 class="text-base font-bold text-slate-700 mb-1">Dokumen Belum Dihasilkan</h3>
-            <p class="text-xs text-slate-500 max-w-sm">Isi parameter di panel sebelah kiri, atau klik tombol <b>"Contoh Sepak Bola"</b> di atas, lalu tekan tombol <b>Generate Dokumen PPM Resmi</b>.</p>
+            <p class="text-xs text-slate-500 max-w-sm">Isi form di panel kiri, atau klik tombol <b>"Contoh Sepak Bola"</b> di atas, lalu klik <b>Generate Dokumen PPM Resmi</b>.</p>
           </div>
         </div>
 
@@ -444,14 +458,18 @@
   </div>
 
   <script>
-    // Master Password Access Key
     const SECRET_ACCESS_KEY = "Pak.arpjokPPMGenerator99";
 
-    // Initial load handler
+    const loadingMessages = [
+      "Menganalisis parameter & Capaian Pembelajaran...",
+      "Menyusun skenario Deep Learning & matriks pedagogis...",
+      "Mengintegrasikan instrumen Asesmen HOTS & LKM Premium...",
+      "Menerapkan sentuhan akhir & memformat dokumen resmi..."
+    ];
+
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       
-      // Check if user session is already validated
       if (sessionStorage.getItem('ppm_auth_token') === 'GRANTED_2026') {
         unlockAppInterface();
       } else {
@@ -459,7 +477,6 @@
       }
     });
 
-    // Toggle Password Visibility
     function togglePasswordVisibility() {
       const input = document.getElementById('passcodeInput');
       const icon = document.getElementById('togglePassIcon');
@@ -474,7 +491,6 @@
       lucide.createIcons();
     }
 
-    // Handle Authentication Submit
     function handleAuthentication(e) {
       e.preventDefault();
       const enteredCode = document.getElementById('passcodeInput').value.trim();
@@ -486,7 +502,7 @@
         unlockAppInterface();
       } else {
         alertBox.classList.remove('hidden');
-        document.getElementById('authAlertMsg').innerText = "Kode sandi rahasia salah! Silakan periksa kembali.";
+        document.getElementById('authAlertMsg').innerText = "Kode akses salah! Periksa kembali kode rahasia Anda.";
       }
     }
 
@@ -507,7 +523,6 @@
       lucide.createIcons();
     }
 
-    // Load Sample Reference Data
     function loadSampleData() {
       document.getElementById('jenjang').value = "SD";
       document.getElementById('kelas').value = "V (Lima)";
@@ -517,16 +532,16 @@
       document.getElementById('pertemuan').value = "3";
       document.getElementById('jpPerPertemuan').value = "3";
       
-      document.getElementById('minatMurid').value = "Permainan bola, kompetisi tim, aktivitas fisik dinamis, tantangan kelompok, dan permainan gerak.";
+      document.getElementById('minatMurid').value = "Permainan bola, aktivitas fisik beregu, kompetisi sehat, dan tantangan gerak dinamis.";
       document.getElementById('gayaBelajar').value = "Audio, Visual, Kinestetik";
-      document.getElementById('kategoriMurid').value = "Murid reguler yang sudah memiliki keterampilan dasar gerak lokomotor & manipulatif.";
+      document.getElementById('kategoriMurid').value = "Murid reguler yang sudah memiliki dasar gerak lokomotor & manipulatif.";
       document.getElementById('modelPembelajaran').value = "Project Based Learning (PjBL)";
-      document.getElementById('metodePembelajaran').value = "Diskusi kelompok, Praktik dan demonstrasi, Mini Tournament";
-      document.getElementById('sarana').value = "IFP/Proyektor, Jaringan Internet, Halaman/Lapangan Sekolah, Bola Sepak/Plastik, Cone, Peluit";
+      document.getElementById('metodePembelajaran').value = "Diskusi kelompok, Praktik & Demonstrasi, Mini Tournament";
+      document.getElementById('sarana').value = "Proyektor, Lapangan Sekolah, Bola Sepak/Plastik, Cone, Peluit";
       document.getElementById('videoLink').value = "https://youtu.be/hxiiNPg8zXE?si=PyWw1T08QtDLw6IP";
 
-      document.getElementById('cp').value = "Murid menyesuaikan dan memodifikasi keterampilan gerak melintasi berbagai situasi gerak. Murid mentransfer strategi gerak yang sudah dikuasai ke dalam berbagai situasi gerak yang berbeda. Murid menginvestigasi berbagai konsep gerak yang dapat diterapkan untuk meningkatkan capaian keterampilan gerak.";
-      document.getElementById('tp').value = "Murid mampu mempraktikkan cara menendang, menghentikan, dan menggiring bola dengan sederhana pada permainan sepak bola yang dimodifikasi secara terampil, terkontrol, dan bergotong royong.";
+      document.getElementById('cp').value = "Murid menyesuaikan dan memodifikasi keterampilan gerak melintasi berbagai situasi gerak. Murid mentransfer strategi gerak yang sudah dikuasai ke dalam berbagai situasi gerak yang berbeda.";
+      document.getElementById('tp').value = "Murid mampu mempraktikkan cara menendang, menghentikan, dan menggiring bola pada permainan sepak bola yang dimodifikasi secara terampil, terkontrol, dan bergotong royong.";
 
       document.getElementById('namaGuru').value = "Mochamad Rifa'i, S.Pd.";
       document.getElementById('nipGuru').value = "19910815 202012 1 003";
@@ -538,7 +553,6 @@
       updateCalculations();
     }
 
-    // Get minutes per JP by school level
     function getJpMinutes(jenjang) {
       switch(jenjang) {
         case 'SD': return 35;
@@ -570,6 +584,39 @@
     function generatePPM(e) {
       e.preventDefault();
 
+      const btn = document.getElementById('submitBtn');
+      const btnSpinner = document.getElementById('btnSpinner');
+      const btnIcon = document.getElementById('btnIcon');
+      const btnText = document.getElementById('btnText');
+      const statusText = document.getElementById('loadingStatusText');
+
+      // 1. Tampilkan state loading UI
+      btn.disabled = true;
+      btnSpinner.classList.remove('hidden');
+      btnIcon.classList.add('hidden');
+      btnText.innerText = "Memproses Dokumen...";
+
+      let msgIdx = 0;
+      statusText.innerText = loadingMessages[0];
+      const msgInterval = setInterval(() => {
+        msgIdx = (msgIdx + 1) % loadingMessages.length;
+        statusText.innerText = loadingMessages[msgIdx];
+      }, 500);
+
+      // 2. Eksekusi proses penyusunan dokumen dengan penundaan halus
+      setTimeout(() => {
+        clearInterval(msgInterval);
+        statusText.innerText = "";
+        btn.disabled = false;
+        btnSpinner.classList.add('hidden');
+        btnIcon.classList.remove('hidden');
+        btnText.innerText = "Generate Dokumen PPM Resmi";
+
+        executePPMGeneration();
+      }, 2000);
+    }
+
+    function executePPMGeneration() {
       const jenjang = document.getElementById('jenjang').value;
       const kelas = document.getElementById('kelas').value;
       const semester = document.getElementById('semester').value;
@@ -610,37 +657,36 @@
 
         if (i === 1) {
           subTitle = `Pengenalan Dasar Teknik & Kontrol Gerak ${materi}`;
-          iceBreakingName = `Game "Follow the Ball / Lead Movement"`;
+          iceBreakingName = `Game "Follow the Leader Movement"`;
           focusTag = "Pengenalan Teknik Dasar, Formasi & Akurasi";
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Pengenalan Konsep):</b> Guru memperagakan demonstrasi teknik dasar ${materi}. Murid mengamati posisi tubuh, perkenaan gerak, dan kontrol tubuh. (Mengamati video: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video Pembelajaran</a>)</li>
-            <li><b>Kegiatan 2 (Latihan Berpasangan):</b> Murid berlatih secara berpasangan melakukan gerakan dasar secara perlahan, saling memberi masukan dan koreksi gerakan.</li>
-            <li><b>Kegiatan 3 (Tantangan Kontekstual "Control Gate Challenge"):</b> Murid mengaplikasikan teknik melewati rintangan. Menjaga sasaran agar bola/gerakan tetap terkontrol secara rapi.</li>
+            <li><b>Kegiatan 1 (Pengenalan Konsep):</b> Guru memperagakan demonstrasi teknik dasar ${materi}. Murid mengamati posisi tubuh dan perkenaan gerak. (Video Pembelajaran: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video</a>)</li>
+            <li><b>Kegiatan 2 (Latihan Berpasangan):</b> Murid berlatih secara berpasangan melakukan gerakan dasar secara perlahan, saling memberi input dan koreksi gerakan.</li>
+            <li><b>Kegiatan 3 (Tantangan "Control Gate Challenge"):</b> Murid mengaplikasikan teknik melewati rintangan untuk mengasah akurasi gerak secara terkontrol.</li>
           `;
         } else if (i === 2) {
           subTitle = `Pengembangan Kombinasi & Kerja Sama Tim ("Mini Game 3 vs 3")`;
-          iceBreakingName = `Passing/Movement Circle Game`;
+          iceBreakingName = `Passing & Movement Circle Game`;
           focusTag = "Kerja Sama Tim, Komunikasi, & Taktik Sederhana";
           kegIntiDetail = `
             <li><b>Kegiatan 1 (Latihan Variasi & Kontrol):</b> Guru memperagakan variasi teknik lanjutan. Murid berlatih dalam formasi bergerak.</li>
-            <li><b>Kegiatan 2 (Triangle/Square Drill):</b> Murid membentuk kelompok kecil, mengalirkan gerak/umpan sambil bergerak aktif menempati ruang kosong.</li>
-            <li><b>Kegiatan 3 (Mini Game Terstruktur 3 vs 3 / Modifikasi):</b> Permainan kecil dengan aturan modifikasi (misal: wajib 3 kali umpan sebelum mencetak poin/gol). Membangun komunikasi dan saling percaya.</li>
+            <li><b>Kegiatan 2 (Triangle/Square Drill):</b> Murid membentuk kelompok kecil, mengalirkan umpan sambil bergerak aktif menempati ruang kosong.</li>
+            <li><b>Kegiatan 3 (Mini Game Terstruktur 3 vs 3):</b> Permainan kecil dengan aturan modifikasi (wajib 3 kali umpan sebelum mencetak poin) untuk menguatkan kerja sama.</li>
           `;
         } else {
           subTitle = `Aplikasi Nyata & Mini Tournament (${modelPembelajaran})`;
           iceBreakingName = `Rhythm & Agility Movement`;
           focusTag = "Aplikasi Strategi, Turnamen Modifikasi, & Sportivitas";
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Pembentukan Tim & Strategi):</b> Murid terbagi ke dalam tim, menentukan nama tim serta mendiskusikan posisi dan pembagian peran.</li>
-            <li><b>Kegiatan 2 (Team Alignment & Positioning):</b> Pemanasan taktis beregu untuk menyesuaikan koordinasi antar anggota kelompok.</li>
-            <li><b>Kegiatan 3 (Mini Tournament Project Based Learning):</b> Pelaksanaan pertandingan/simulasi antar tim dengan menekankan penerapan teknik dasar, strategi kelompok, dan prinsip sportivitas tingginya.</li>
+            <li><b>Kegiatan 1 (Pembentukan Tim & Strategi):</b> Murid terbagi ke dalam tim, menentukan nama tim serta mendiskusikan pembagian peran.</li>
+            <li><b>Kegiatan 2 (Team Alignment Drill):</b> Pemanasan taktis beregu untuk menyesuaikan koordinasi antar anggota kelompok.</li>
+            <li><b>Kegiatan 3 (Mini Tournament PjBL):</b> Pelaksanaan pertandingan/simulasi antar tim dengan menekankan penerapan teknik dasar, strategi kelompok, dan sportivitas.</li>
           `;
         }
 
         meetingsHTML += `
-          <!-- PERTEMUAN ${i} -->
-          <div style="margin-bottom: 22px; border: 1px solid #1e293b; padding: 12px; background-color: #ffffff;">
-            <p style="margin: 0 0 8px 0; font-size: 11pt; font-weight: bold; color: #000000; text-transform: uppercase; border-bottom: 1px solid #1e293b; padding-bottom: 4px;">
+          <div style="margin-bottom: 22px; border: 1px solid #0f172a; padding: 12px; background-color: #ffffff;">
+            <p style="margin: 0 0 8px 0; font-size: 11pt; font-weight: bold; color: #000000; text-transform: uppercase; border-bottom: 1px solid #0f172a; padding-bottom: 4px;">
               PERTEMUAN ${i} : ${subTitle.toUpperCase()}
             </p>
             <p style="margin: 0 0 8px 0; font-size: 9.5pt;"><b>Alokasi Waktu:</b> ${jpPerPertemuan} x ${mins} Menit | <b>Fokus Utama:</b> ${focusTag}</p>
@@ -654,35 +700,35 @@
                 <td style="font-weight: bold; vertical-align: top;">Pendahuluan (15 Menit)</td>
                 <td style="vertical-align: top;">
                   <ul style="margin: 0; padding-left: 18px;">
-                    <li>Guru mengucapkan salam, menunjuk salah satu murid memimpin doa, dilanjutkan absensi kehadiran.</li>
-                    <li><b>Mengaitkan Pembelajaran Sebelumnya:</b> Mengulas kembali pentingnya aktivitas fisik dan kebugaran tubuh.</li>
+                    <li>Guru mengucapkan salam, berdoa bersama, dan mengecek presensi murid.</li>
+                    <li><b>Apersepsi:</b> Mengulas kembali pentingnya kebugaran tubuh dan koordinasi gerak.</li>
                     <li><b>Pertanyaan Pemantik:</b> 
-                      <br><i>"Bagaimana cara mengontrol gerak agar tidak mudah lepas/salah arah saat dimainkan?"</i>
-                      <br><i>"Mengapa kerja sama tim jauh lebih penting daripada bermain sendiri?"</i>
+                      <br><i>"Bagaimana cara mengontrol gerak agar tidak mudah lepas saat dimainkan?"</i>
+                      <br><i>"Mengapa kerja sama tim jauh lebih efektif daripada bermain sendiri?"</i>
                     </li>
-                    <li><b>Tujuan Pembelajaran:</b> Guru menjelaskan fokus keterampilan yang akan dicapai hari ini.</li>
-                    <li><b>Pemanasan / Ice Breaking:</b> ${iceBreakingName} (Melatih kelincahan, fokus, dan merangsang denyut jantung).</li>
+                    <li><b>Tujuan Pembelajaran:</b> Menyampaikan fokus keterampilan yang akan dicapai.</li>
+                    <li><b>Pemanasan / Ice Breaking:</b> ${iceBreakingName} (Melatih kelincahan dan merangsang fokus).</li>
                   </ul>
                 </td>
               </tr>
               <tr>
                 <td style="font-weight: bold; vertical-align: top;">Kegiatan Inti (60 Menit)</td>
                 <td style="vertical-align: top;">
-                  <p style="margin: 0 0 6px 0; font-style: italic; color: #1e40af;"><b>Media/Video Pembelajaran:</b> <a href="${videoLink}" target="_blank">${videoLink}</a></p>
+                  <p style="margin: 0 0 6px 0; font-style: italic; color: #1e40af;"><b>Tautan Media Pembelajaran:</b> <a href="${videoLink}" target="_blank">${videoLink}</a></p>
                   <ol style="margin: 0; padding-left: 18px;" type="1">
                     ${kegIntiDetail}
                   </ol>
-                  <p style="margin: 6px 0 0 0; font-size: 9pt;"><b>Diskusi Kelompok:</b> Murid menganalisis cara melakukan gerakan dengan seimbang serta pembagian peran dalam kelompok.</p>
+                  <p style="margin: 6px 0 0 0; font-size: 9pt;"><b>Diskusi Kelompok:</b> Murid menganalisis keseimbangan gerak dan pembagian peran dalam kelompok.</p>
                 </td>
               </tr>
               <tr>
                 <td style="font-weight: bold; vertical-align: top;">Penutup (15 Menit)</td>
                 <td style="vertical-align: top;">
                   <ul style="margin: 0; padding-left: 18px;">
-                    <li><b>Refleksi:</b> Guru meminta murid menyampaikan gerakan apa yang paling mudah dan mana yang membutuhkan latihan ekstra.</li>
-                    <li><b>Apresiasi:</b> Memberikan pujian atas keaktifan, keberanian mencoba, dan kejujuran/sportivitas murid.</li>
-                    <li><b>Kesimpulan:</b> Menguatkan konsep bahwa penguasaan teknik dasar dan kerja sama adalah kunci utama.</li>
-                    <li><b>Tindak Lanjut & Doa:</b> Informasi materi pertemuan berikutnya, pendinginan fisik, dan doa penutup.</li>
+                    <li><b>Refleksi:</b> Murid menyampaikan gerakan yang paling mudah dan yang memerlukan latihan lanjutan.</li>
+                    <li><b>Apresiasi:</b> Memberikan apresiasi atas sportivitas, keberanian, dan keaktifan murid.</li>
+                    <li><b>Kesimpulan:</b> Menguatkan konsep bahwa penguasaan teknik dasar dan kolaborasi adalah kunci utama.</li>
+                    <li><b>Pendinginan & Doa:</b> Penguluran otot, informasi materi berikutnya, dan doa penutup.</li>
                   </ul>
                 </td>
               </tr>
@@ -705,7 +751,7 @@
       const docHTML = `
         <div id="ppmDocument" style="font-family: Arial, Helvetica, sans-serif; color: #000000; line-height: 1.45; font-size: 10pt;">
           
-          <!-- KOP HEADER UTAMA -->
+          <!-- KOP HEADER DOKUMEN -->
           <div style="text-align: center; border-bottom: 3px double #000000; padding-bottom: 8px; margin-bottom: 16px;">
             <h2 style="margin: 0; font-size: 13pt; font-weight: bold; text-transform: uppercase;">PERANCANGAN PEMBELAJARAN MENDALAM (DEEP LEARNING)</h2>
             <h3 style="margin: 3px 0 0 0; font-size: 11pt; font-weight: bold; text-transform: uppercase; color: #1e3a8a;">
@@ -809,7 +855,7 @@
             </tr>
           </table>
 
-          <!-- SECTION IV: KEGIATAN PEMBELAJARAN PERTEMUAN -->
+          <!-- SECTION IV: KEGIATAN PEMBELAJARAN -->
           <div style="margin-top: 20px;">
             <p style="font-weight: bold; font-size: 10.5pt; margin: 0 0 8px 0; background-color: #f1f5f9; padding: 4px 8px; border: 1px solid #000000;">
               IV. KEGIATAN PEMBELAJARAN (SKENARIO PERTEMUAN LENGKAP)
@@ -823,20 +869,20 @@
             <tr>
               <td width="30%"><b>Kemitraan Pembelajaran</b></td>
               <td>
-                <b>Wali Kelas:</b> Monitoring kedisiplinan dan karakter murid.<br>
-                <b>Orang Tua:</b> Dukungan motivasi latihan mandiri dan gaya hidup sehat di rumah.
+                <b>Wali Kelas:</b> Monitoring kedisiplinan dan pengembangan karakter.<br>
+                <b>Orang Tua:</b> Dukungan motivasi latihan mandiri dan penerapan hidup sehat di rumah.
               </td>
             </tr>
             <tr>
               <td><b>Lingkungan Pembelajaran</b></td>
               <td>
-                <b>Budaya Belajar:</b> Saling menghargai, kerja sama, jujur, dan sportif.<br>
-                <b>Ruang Fisik & Virtual:</b> Lapangan sekolah yang bersih dan aman; Tautan media video pembelajaran interaktif.
+                <b>Budaya Belajar:</b> Saling menghargai, kolaboratif, jujur, dan sportif.<br>
+                <b>Ruang Fisik & Virtual:</b> Lapangan sekolah yang bersih dan aman; Tautan video pembelajaran interaktif.
               </td>
             </tr>
           </table>
 
-          <!-- KERANGKA DEEP LEARNING (MINDFUL, MEANINGFUL, JOYFUL) -->
+          <!-- KERANGKA DEEP LEARNING -->
           <p style="font-weight: bold; font-size: 10.5pt; margin: 16px 0 4px 0; background-color: #f1f5f9; padding: 4px 8px; border: 1px solid #000000;">VI. PENGALAMAN BELAJAR (DEEP LEARNING FRAMEWORK)</p>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 9.5pt;" border="1" cellpadding="6">
             <tr style="background-color: #f8fafc;">
@@ -846,24 +892,24 @@
             <tr>
               <td><b>1. Memahami (Mindful)</b></td>
               <td style="text-align: justify;">
-                <b>Pemantik Kontekstual & Diskusi:</b> Guru menjelaskan konsep dasar ${materi}. Murid mengamati tayangan/demonstrasi, mendiskusikan LKM bersama kelompok mengenai perbedaan fungsi gerakan, kapan teknik digunakan, serta cara menjaga posisi tubuh tetap seimbang. Murid melakukan tutor sebaya dalam kelompok kecil.
+                <b>Pemantik Kontekstual & Diskusi:</b> Guru menjelaskan konsep dasar ${materi}. Murid mengamati demonstrasi/video, mendiskusikan LKM bersama kelompok mengenai perbedaan fungsi gerakan, momen penggunaan teknik, serta menjaga keseimbangan posisi tubuh.
               </td>
             </tr>
             <tr>
               <td><b>2. Mengaplikasi (Meaningful)</b></td>
               <td style="text-align: justify;">
-                Murid secara individu maupun kelompok mempraktikkan langsung teknik ${materi} dalam permainan yang dimodifikasi. Murid diberi kebebasan mengembangkan kreativitas mengatur gerak, mengontrol posisi, serta menerapkan strategi kelompok secara dinamis dan bermakna.
+                Murid mempraktikkan langsung teknik ${materi} dalam permainan yang dimodifikasi. Murid diberi kebebasan bereksperimen mengatur tempo gerak, mengontrol posisi, serta menerapkan strategi kelompok secara dinamis.
               </td>
             </tr>
             <tr>
               <td><b>3. Merefleksi (Joyful)</b></td>
               <td style="text-align: justify;">
-                Murid secara beregu mendiskusikan hal yang mudah dan sulit. Murid saling memberikan umpan balik (peer-feedback). Selanjutnya murid melakukan refleksi mandiri mengisi <i>"Kartu Feeling"</i> sesuai perasaan mereka, serta mencatat perbaikan untuk pertemuan berikutnya.
+                Murid secara beregu mendiskusikan kendala dan kemudahan yang dihadapi. Murid saling memberikan umpan balik, dilanjutkan refleksi mandiri mengisi <i>"Kartu Feeling"</i> untuk mengevaluasi perkembangan diri.
               </td>
             </tr>
           </table>
 
-          <!-- PENGESAHAN TANDA TANGAN -->
+          <!-- TANDA TANGAN PENGESAHAN -->
           <div style="margin-top: 30px; page-break-inside: avoid;">
             <table style="width: 100%; border: none; font-size: 10pt;">
               <tr>
@@ -883,7 +929,7 @@
             </table>
           </div>
 
-          <!-- LAMPIRAN-LAMPIRAN SESUAI STANDAR RESMI -->
+          <!-- LAMPIRAN-LAMPIRAN DOKUMEN -->
           <div class="page-break" style="margin-top: 40px; border-top: 3px double #000000; padding-top: 10px;">
             <div style="text-align: center; border-bottom: 2px solid #000000; padding-bottom: 6px; margin-bottom: 16px;">
               <h3 style="margin: 0; font-size: 12pt; font-weight: bold; text-transform: uppercase;">LAMPIRAN DOKUMEN PERENCANAAN PEMBELAJARAN MENDALAM</h3>
@@ -933,7 +979,7 @@
             </table>
             
             <div style="font-size: 8.5pt; background:#f8fafc; padding:6px; border:1px solid #cccccc; margin-bottom:16px;">
-              <b>Rekapitulasi Kategori Skor Total Formatif:</b>
+              <b>Kategori Skor Total Formatif:</b>
               <br>• Skor 12 - 16 : <b>Tuntas (Sangat Baik)</b>
               <br>• Skor 8 - 11 : <b>Berkembang (Cukup)</b>
               <br>• Skor 4 - 7 : <b>Perlu Bimbingan Tambahan</b>
@@ -957,7 +1003,7 @@
                   <td>Gerakan belum sesuai prinsip teknis dasar dan kurang kontrol.</td>
                   <td>Cukup sesuai namun masih belum konsisten.</td>
                   <td>Tepat sasaran dan kontrol gerakan cukup baik.</td>
-                  <td>Sangat tepat, stabil, kuat, dan terarah dengan sempurna.</td>
+                  <td>Sangat tepat, stabil, dan terarah dengan sempurna.</td>
                 </tr>
                 <tr>
                   <td><b>Kontrol & Keseimbangan</b></td>
@@ -989,7 +1035,7 @@
                     <ul style="margin:2px 0 0 0; padding-left:16px;">
                       <li>Sikap awal berdiri seimbang.</li>
                       <li>Pandangan mengawasi sasaran dan ruang sekitar.</li>
-                      <li>Kontak perkenaan gerak/alat yang presisi.</li>
+                      <li>Kontak perkenaan gerak yang presisi.</li>
                     </ul>
                   </td>
                   <td width="50%" style="vertical-align: top;">
@@ -1040,67 +1086,85 @@
               </tbody>
             </table>
 
-            <!-- LAMPIRAN 6 -->
-            <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 6: LEMBAR KERJA MURID (LKM) & UJI PEMAHAMAN</h4>
-            <div style="border: 1px solid #000000; padding: 12px; font-size: 9pt; margin-bottom: 20px;">
+            <!-- LAMPIRAN 6: LEMBAR KERJA MURID (LKM) HOTS PREMIUM -->
+            <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 6: LEMBAR KERJA MURID (LKM) & UJI PEMAHAMAN BERBASIS HOTS</h4>
+            <div style="border: 1px solid #000000; padding: 12px; font-size: 9pt; margin-bottom: 20px; background-color: #ffffff;">
               <p style="margin: 0 0 6px 0;"><b>Mata Pelajaran:</b> ${mapel} | <b>Kelas:</b> ${kelas} | <b>Materi:</b> ${materi}</p>
               <p style="margin: 0 0 10px 0;"><b>Nama Murid:</b> ................................................................ | <b>Kelompok:</b> ........................</p>
               
-              <p style="font-weight: bold; border-bottom: 1px solid #cccccc; padding-bottom: 2px;">A. PILIHAN GANDA</p>
-              <ol style="margin: 4px 0 10px 0; padding-left: 18px;">
-                <li style="margin-bottom: 4px;">Tujuan utama mengontrol gerak dengan baik adalah ...
-                  <br>a. Mempercepat kelelahan lawan &nbsp;&nbsp;&nbsp; b. Menjaga sasaran agar tidak mudah direbut lawan
+              <p style="font-weight: bold; border-bottom: 1.5px solid #000000; padding-bottom: 3px; margin-bottom: 8px; font-size: 9.5pt;">
+                A. PILIHAN GANDA (ANALISIS & EVALUASI SKENARIO)
+              </p>
+              <ol style="margin: 0 0 14px 0; padding-left: 18px;">
+                <li style="margin-bottom: 10px;">
+                  <b>Skenario Studi Kasus:</b> Ketika tim Budi melakukan serangan balik cepat, lawan menerapkan tekanan ketat (*press*) di area pertahanan. Budi melihat dua rekannya berada di posisi berbeda: Roni berdiri bebas di area sayap yang luas, sementara Andi dijaga ketat di depan gawang lawan. Berdasarkan analisis situasi taktis tersebut, keputusan paling efektif yang harus diambil Budi adalah...
+                  <br>a. Memaksakan mengoper langsung ke Andi agar segera bisa mencetak gol.
+                  <br><b>b. Mengoper bola ke Roni di area terbuka untuk merenggangkan pertahanan lawan dan membuka ruang tembak baru.</b>
+                  <br>c. Menggiring bola sendiri menembus semua pemain lawan tanpa memperhitungkan risiko kehilangan bola.
+                  <br>d. Menghentikan bola sepenuhnya dan menunggu seluruh pemain lawan kembali ke posisi bertahan.
                 </li>
-                <li style="margin-bottom: 4px;">Saat melakukan kerja sama tim dalam permainan, sikap yang harus dihindari adalah ...
-                  <br>a. Komunikasi aktif &nbsp;&nbsp;&nbsp; b. Bermain individualis / egois
+                <li style="margin-bottom: 10px;">
+                  <b>Analisis Mekanika Gerak:</b> Saat menghentikan bola yang datang meluncur deras dari operan jarak jauh, seorang pemain sering mengalami pantulan bola yang terlalu jauh sehingga bola mudah direbut lawan. Evaluasi teknis yang tepat untuk memperbaiki kesalahan mekanika gerak tersebut adalah...
+                  <br>a. Menahan kaki penumpu secara kaku tepat di titik perkenaan bola.
+                  <br><b>b. Ditarik sedikit ke belakang (*absorbing momentum*) pada saat perkenaan agar menyerap kecepatan bola secara halus.</b>
+                  <br>c. Mendorong kaki ke depan secara keras guna menolak laju datangnya bola.
+                  <br>d. Melompat tinggi di tempat saat bola menyentuh permukaan tanah.
                 </li>
-                <li style="margin-bottom: 4px;">Manfaat melakukan pemanasan sebelum olahraga adalah ...
-                  <br>a. Menghindari risiko cedera otot &nbsp;&nbsp;&nbsp; b. Membuat tubuh menjadi lemas
+                <li style="margin-bottom: 10px;">
+                  <b>Pengambilan Keputusan & Nilai Karakter:</b> Dalam simulasi mini tournament, tim kamu tertinggal 1 gol dan waktu tersisa 2 menit. Salah satu teman satu tim membuat kesalahan kontrol yang menyebabkan terjadinya gol lawan. Sebagai kapten tim yang menerapkan nilai kolaborasi dan penalaran kritis, tindakan paling tepat adalah...
+                  <br>a. Mengganti posisi teman tersebut secara sepihak dan menyalahkannya atas kekalahan.
+                  <br><b>b. Memberikan dorongan semangat, mengatur ulang posisi taktis secara cepat, dan fokus memanfaatkan sisa waktu secara kooperatif.</b>
+                  <br>c. Meminta wasit menghentikan pertandingan karena merasa putus asa.
+                  <br>d. Membiarkan permainan berjalan tanpa koordinasi dan bermain individualistis.
                 </li>
               </ol>
 
-              <p style="font-weight: bold; border-bottom: 1px solid #cccccc; padding-bottom: 2px;">B. ESSAY / URAIAN SINGKAT</p>
-              <ol style="margin: 4px 0 0 0; padding-left: 18px;">
-                <li style="margin-bottom: 10px;">Jelaskan perbedaan fungsi antara gerakan mengarahkan/mengoper dan gerakan menghentikan/mengontrol!
-                  <br><span style="color: #64748b;">Jawaban: ........................................................................................................................................................................</span>
+              <p style="font-weight: bold; border-bottom: 1.5px solid #000000; padding-bottom: 3px; margin-bottom: 8px; font-size: 9.5pt;">
+                B. ESSAY / URAIAN ANALITIS (PROBLEM SOLVING & CREATING)
+              </p>
+              <ol style="margin: 0; padding-left: 18px;">
+                <li style="margin-bottom: 12px;">
+                  <b>Analisis Taktis & Mekanika:</b> Jelaskan perbedaan mendasar fungsi mekanika tubuh antara teknik mengoper (*passing*) menggunakan kaki bagian dalam dengan mengoper menggunakan punggung kaki dalam situasi pertandingan nyata! Momen spesifik seperti apa yang paling tepat untuk menggunakan masing-masing teknik tersebut?
+                  <br><span style="color: #64748b; font-style: italic;">Jawaban: ........................................................................................................................................................................................................................................................................................................................................................................</span>
                 </li>
-                <li>Mengapa rasa saling percaya dan komunikasi sangat penting saat bermain dalam satu tim?
-                  <br><span style="color: #64748b;">Jawaban: ........................................................................................................................................................................</span>
+                <li style="margin-bottom: 8px;">
+                  <b>Rancangan Strategi Kelompok:</b> Rancanglah sebuah strategi formasi dan alur pergerakan sederhana untuk tim yang terdiri dari 4 orang saat menghadapi tim lawan yang memiliki pertahanan sangat rapat di area tengah! Mengapa strategi tersebut menurut kelompokmu paling efektif?
+                  <br><span style="color: #64748b; font-style: italic;">Jawaban: ........................................................................................................................................................................................................................................................................................................................................................................</span>
                 </li>
               </ol>
             </div>
 
-            <!-- LAMPIRAN 7 (CLEAN REFLECTION CARDS FOR ALL BROWSERS & WORD EXPORT) -->
+            <!-- LAMPIRAN 7 -->
             <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 7: LEMBAR REFLEKSI MURID ("KARTU FEELING")</h4>
             <div style="border: 2px dashed #000000; padding: 12px; background-color: #fafafa; font-size: 9pt;">
               <p style="text-align: center; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
                 Bagaimana Perasaanmu Setelah Mengikuti Pembelajaran Hari Ini?
               </p>
-              <p style="margin-bottom: 12px; text-align: center;">Lingkari atau beri tanda centang (✓) pada kotak ekspresi yang sesuai dengan perasaanmu!</p>
+              <p style="margin-bottom: 12px; text-align: center;">Beri tanda centang (✓) atau lingkaran pada ekspresi yang paling sesuai!</p>
               
               <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; text-align: center;">
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">😊</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#128522;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Senang</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">😃</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#128515;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Gembira</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">🤔</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#129300;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Bingung</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">😫</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#128555;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Lelah</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">😤</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#128548;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Kesal</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 18pt; font-weight: bold;">😢</div>
+                  <div style="font-size: 20pt; font-weight: bold;">&#128546;</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Sedih</div>
                 </div>
               </div>
@@ -1116,14 +1180,11 @@
         </div>
       `;
 
-      // Render document into output container
       const container = document.getElementById('outputContainer');
       container.innerHTML = docHTML;
 
-      // Display Export and Print controls
       document.getElementById('actionButtons').classList.remove('hidden');
 
-      // Smooth scroll preview on mobile
       if (window.innerWidth < 1024) {
         container.scrollIntoView({ behavior: 'smooth' });
       }
