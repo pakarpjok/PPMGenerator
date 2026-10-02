@@ -23,7 +23,7 @@
       backdrop-filter: blur(14px);
     }
 
-    /* Custom Scrollbar for Form Sidebar */
+    /* Custom Scrollbar */
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
@@ -53,7 +53,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Print & Word Export Professional Layout */
+    /* Print & Word Export Layout */
     @media print {
       body {
         background: #ffffff !important;
@@ -117,6 +117,7 @@
               placeholder="Masukkan kata sandi..." 
               class="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition"
               required
+              autocomplete="off"
             >
             <button 
               type="button" 
@@ -404,7 +405,7 @@
             </div>
           </div>
 
-          <!-- SUBMIT BUTTON WITH PREMIUM LOADING ANIMATION -->
+          <!-- SUBMIT BUTTON -->
           <div class="space-y-1.5">
             <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 hover:from-blue-800 hover:to-slate-950 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-700/20 transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm disabled:opacity-70 disabled:cursor-not-allowed">
               <span id="btnSpinner" class="hidden spinner"></span>
@@ -470,10 +471,12 @@
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       
+      // Memeriksa status sesi otentikasi
       if (sessionStorage.getItem('ppm_auth_token') === 'GRANTED_2026') {
         unlockAppInterface();
       } else {
         document.getElementById('authModal').classList.remove('hidden');
+        document.getElementById('appContainer').classList.add('hidden');
       }
     });
 
@@ -492,17 +495,22 @@
     }
 
     function handleAuthentication(e) {
-      e.preventDefault();
-      const enteredCode = document.getElementById('passcodeInput').value.trim();
+      if (e) e.preventDefault();
+      
+      const inputEl = document.getElementById('passcodeInput');
+      const enteredCode = inputEl.value.trim();
       const alertBox = document.getElementById('authAlert');
 
+      // Proteksi ketat: Pastikan input persis dengan kode rahasia
       if (enteredCode === SECRET_ACCESS_KEY) {
         sessionStorage.setItem('ppm_auth_token', 'GRANTED_2026');
         alertBox.classList.add('hidden');
         unlockAppInterface();
       } else {
         alertBox.classList.remove('hidden');
-        document.getElementById('authAlertMsg').innerText = "Kode akses salah! Periksa kembali kode rahasia Anda.";
+        document.getElementById('authAlertMsg').innerText = "Kode sandi tidak valid! Silakan periksa kembali.";
+        inputEl.value = "";
+        inputEl.focus();
       }
     }
 
@@ -582,7 +590,13 @@
     }
 
     function generatePPM(e) {
-      e.preventDefault();
+      if (e) e.preventDefault();
+
+      // Memastikan user terotorisasi sebelum eksekusi generate
+      if (sessionStorage.getItem('ppm_auth_token') !== 'GRANTED_2026') {
+        lockSession();
+        return;
+      }
 
       const btn = document.getElementById('submitBtn');
       const btnSpinner = document.getElementById('btnSpinner');
@@ -590,7 +604,6 @@
       const btnText = document.getElementById('btnText');
       const statusText = document.getElementById('loadingStatusText');
 
-      // 1. Tampilkan state loading UI
       btn.disabled = true;
       btnSpinner.classList.remove('hidden');
       btnIcon.classList.add('hidden');
@@ -603,7 +616,6 @@
         statusText.innerText = loadingMessages[msgIdx];
       }, 500);
 
-      // 2. Eksekusi proses penyusunan dokumen dengan penundaan halus
       setTimeout(() => {
         clearInterval(msgInterval);
         statusText.innerText = "";
