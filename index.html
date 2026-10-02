@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full bg-slate-100">
+<html lang="id" class="h-full bg-slate-900">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generator PPM Pro - Perencanaan Pembelajaran Mendalam (Deep Learning)</title>
+  <title>Generator PPM Pro - Perencanaan Pembelajaran Mendalam</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,14 +17,34 @@
       font-family: 'Plus Jakarta Sans', sans-serif; 
     }
 
-    /* Modal Smooth Transition */
+    /* Backdrop Blur Modal */
     .modal-backdrop {
       background-color: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
     }
 
-    /* Print & Word Document Layout Fixes */
+    /* Custom Scrollbar for Form Sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Print & Word Export Professional Layout */
     @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
       body * { 
         visibility: hidden; 
       }
@@ -52,30 +72,30 @@
     }
   </style>
 </head>
-<body class="h-full text-slate-800 antialiased flex flex-col min-h-screen">
+<body class="h-full text-slate-800 bg-slate-100 antialiased flex flex-col min-h-screen">
 
-  <!-- ================= PASSCODE / LOGIN OVERLAY (CONFIDENTIAL ACCESS) ================= -->
+  <!-- ================= PASSCODE / LOGIN OVERLAY (AUTHENTICATION) ================= -->
   <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop transition-all duration-300">
-    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 sm:p-8 space-y-6 relative overflow-hidden">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200/80 max-w-md w-full p-6 sm:p-8 space-y-6 relative overflow-hidden">
       <!-- Background Accents -->
-      <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
-      <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="absolute -top-12 -right-12 w-36 h-36 bg-blue-600/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-indigo-600/10 rounded-full blur-2xl pointer-events-none"></div>
 
       <!-- Modal Header -->
       <div class="text-center space-y-2 relative z-10">
-        <div class="w-16 h-16 bg-gradient-to-tr from-slate-800 to-slate-900 text-white rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-slate-900/20">
+        <div class="w-16 h-16 bg-gradient-to-tr from-slate-900 to-blue-900 text-white rounded-2xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/20 border border-slate-700/50">
           <i data-lucide="shield-lock" class="w-8 h-8 text-blue-400"></i>
         </div>
-        <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Akses Terkunci PPM Pro</h2>
-        <p class="text-xs text-slate-500 leading-relaxed">
-          Sistem ini khusus bagi pengguna berlisensi. Masukkan kode lisensi rahasia Anda untuk melanjutkan.
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Akses Terkunci PPM Pro</h2>
+        <p class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
+          Sistem Perencanaan Pembelajaran Mendalam berlisensi resmi. Masukkan kode rahasia Anda untuk membuka konsol.
         </p>
       </div>
 
-      <!-- Login Form -->
+      <!-- Form Login -->
       <form id="authForm" onsubmit="handleAuthentication(event)" class="space-y-4 relative z-10">
         <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kata Kunci / Password Akses</label>
+          <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kata Kunci / Kode Akses</label>
           <div class="relative flex items-center">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <i data-lucide="key-round" class="w-4 h-4"></i>
@@ -87,7 +107,6 @@
               class="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition"
               required
             >
-            <!-- Toggle Show/Hide Password Button -->
             <button 
               type="button" 
               onclick="togglePasswordVisibility()" 
@@ -105,13 +124,13 @@
           <span id="authAlertMsg">Kode sandi tidak valid! Silakan periksa kembali.</span>
         </div>
 
-        <button type="submit" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2 text-sm">
-          <i data-lucide="unlock" class="w-5 h-5"></i> Masuk Aplikasi
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 hover:from-blue-800 hover:to-slate-950 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm">
+          <i data-lucide="unlock" class="w-4 h-4"></i> Masuk Konsol Aplikasi
         </button>
       </form>
       
       <div class="pt-3 border-t border-slate-100 text-center">
-        <p class="text-[11px] text-slate-400">Akses terbatas hanya untuk pihak yang memiliki izin resmi.</p>
+        <p class="text-[11px] text-slate-400 font-medium">Platform Resmi Pengembangan Perangkat Ajar Kurikulum Merdeka</p>
       </div>
     </div>
   </div>
@@ -119,33 +138,33 @@
   <!-- ================= MAIN APP INTERFACE ================= -->
   <div id="appContainer" class="hidden flex-col min-h-screen">
     
-    <!-- Header Navbar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
-      <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 flex flex-wrap justify-between items-center gap-3">
+    <!-- Navigation Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md no-print">
+      <div class="max-w-7xl mx-auto px-4 py-3.5 sm:px-6 flex flex-wrap justify-between items-center gap-3">
         
         <div class="flex items-center gap-3">
-          <div class="p-2.5 bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl shadow-md">
+          <div class="p-2.5 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-xl shadow-lg shadow-blue-500/20 ring-1 ring-white/20">
             <i data-lucide="book-open-check" class="w-6 h-6"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">PPM Generator Pro</h1>
-              <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1">
-                <i data-lucide="sparkles" class="w-3 h-3 text-emerald-600"></i> Lisensi Aktif
+              <h1 class="text-lg sm:text-xl font-black text-white tracking-tight">PPM Generator Pro</h1>
+              <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> Premium Enterprise
               </span>
             </div>
-            <p class="text-xs text-slate-500 font-medium">Perancangan Pembelajaran Mendalam (Deep Learning) Kurikulum Merdeka</p>
+            <p class="text-xs text-slate-400 font-medium">Perancangan Pembelajaran Mendalam (Deep Learning) Kurikulum Merdeka</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <button type="button" onclick="loadSampleData()" class="text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 px-3 py-2 rounded-xl flex items-center gap-1.5 transition" title="Isi otomatis dengan contoh Sepak Bola">
-            <i data-lucide="wand-2" class="w-4 h-4"></i> Contoh Sepak Bola
+          <button type="button" onclick="loadSampleData()" class="text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition" title="Isi otomatis dengan contoh Sepak Bola">
+            <i data-lucide="wand-2" class="w-4 h-4 text-blue-400"></i> Contoh Sepak Bola
           </button>
-          <button type="button" onclick="resetForm()" class="text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
-            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Kosongkan Form
+          <button type="button" onclick="resetForm()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
+            <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-400"></i> Reset Form
           </button>
-          <button type="button" onclick="lockSession()" class="text-xs font-medium bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3 py-2 rounded-xl flex items-center gap-1.5 transition" title="Kunci Aplikasi">
+          <button type="button" onclick="lockSession()" class="text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-xl flex items-center gap-1.5 transition" title="Keluar / Kunci Konsol">
             <i data-lucide="lock" class="w-4 h-4"></i> Keluar
           </button>
         </div>
@@ -153,31 +172,31 @@
       </div>
     </header>
 
-    <!-- Main Form & Preview Workspace -->
+    <!-- Main Workspace Grid -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow w-full">
       
       <!-- ================= PANEL INPUT FORM (5 COLUMNS) ================= -->
-      <div class="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 h-fit max-h-[calc(100vh-100px)] overflow-y-auto no-print">
+      <div class="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl shadow-xl border border-slate-200 space-y-5 h-fit max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar no-print">
         
         <div class="border-b border-slate-100 pb-3 flex items-center justify-between sticky top-0 bg-white z-10 pt-1">
-          <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i data-lucide="sliders" class="w-5 h-5 text-blue-600"></i> Parameter PPM Baru
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-blue-600"></i> Parameter Input PPM
           </h2>
-          <span class="text-[11px] bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded-full border border-indigo-100">Standar Resmi</span>
+          <span class="text-[11px] bg-blue-50 text-blue-700 font-extrabold px-2.5 py-1 rounded-md border border-blue-100 uppercase tracking-wide">Format Standar Resmi</span>
         </div>
 
         <form id="ppmForm" onsubmit="generatePPM(event)" class="space-y-4">
           
           <!-- SECTION 1: IDENTITAS PEMBELAJARAN -->
-          <div class="space-y-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-            <h3 class="text-xs font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+          <div class="space-y-3 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <i data-lucide="graduation-cap" class="w-4 h-4 text-blue-600"></i> 1. Identitas Pembelajaran
             </h3>
             
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Jenjang Sekolah</label>
-                <select id="jenjang" onchange="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                <select id="jenjang" onchange="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none bg-white">
                   <option value="SD">SD (1 JP = 35 Menit)</option>
                   <option value="SMP">SMP (1 JP = 40 Menit)</option>
                   <option value="SMA">SMA (1 JP = 45 Menit)</option>
@@ -187,8 +206,8 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas & Semester</label>
                 <div class="grid grid-cols-2 gap-1">
-                  <input type="text" id="kelas" placeholder="misal: V (Lima)" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
-                  <select id="semester" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                  <input type="text" id="kelas" placeholder="mis: V (Lima)" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                  <select id="semester" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none bg-white">
                     <option value="Ganjil">Ganjil</option>
                     <option value="Genap">Genap</option>
                   </select>
@@ -199,67 +218,70 @@
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Mata Pelajaran</label>
-                <input type="text" id="mapel" placeholder="contoh: PJOK" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="mapel" placeholder="contoh: PJOK" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Materi Pokok</label>
-                <input type="text" id="materi" placeholder="contoh: Sepak Bola (Menendang & Mengontrol)" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="materi" placeholder="contoh: Sepak Bola" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Pertemuan</label>
-                <input type="number" id="pertemuan" min="1" max="10" placeholder="contoh: 3" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="number" id="pertemuan" min="1" max="10" placeholder="mis: 3" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">JP per Pertemuan</label>
-                <input type="number" id="jpPerPertemuan" min="1" max="8" placeholder="contoh: 3" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="number" id="jpPerPertemuan" min="1" max="8" placeholder="mis: 3" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
             </div>
 
-            <div class="bg-blue-100/70 border border-blue-200 rounded-lg p-2 text-xs text-blue-900">
-              <span class="block text-[10px] font-bold text-blue-700 uppercase">Kalkulasi Alokasi Waktu:</span>
-              <p id="alokasiWaktuPreview" class="font-bold text-slate-800 mt-0.5">Isi pertemuan dan JP untuk menghitung total waktu</p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-2.5 text-xs text-blue-900 flex items-start gap-2">
+              <i data-lucide="clock" class="w-4 h-4 text-blue-600 shrink-0 mt-0.5"></i>
+              <div>
+                <span class="block text-[10px] font-bold text-blue-800 uppercase tracking-wide">Kalkulasi Alokasi Waktu</span>
+                <p id="alokasiWaktuPreview" class="font-bold text-slate-800 mt-0.5">Isi pertemuan dan JP untuk menghitung total waktu</p>
+              </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Capaian Pembelajaran (CP)</label>
-              <textarea id="cp" rows="3" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required placeholder="contoh: Murid menyesuaikan dan memodifikasi keterampilan gerak melintasi berbagai situasi gerak..."></textarea>
+              <textarea id="cp" rows="3" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="contoh: Murid menyesuaikan dan memodifikasi keterampilan gerak melintasi berbagai situasi gerak..."></textarea>
             </div>
             
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Tujuan Pembelajaran (TP)</label>
-              <textarea id="tp" rows="2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required placeholder="contoh: Murid mampu mempraktikkan cara menendang dan menghentikan bola secara terampil dan bergotong royong..."></textarea>
+              <textarea id="tp" rows="2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required placeholder="contoh: Murid mampu mempraktikkan cara menendang dan menghentikan bola secara terampil dan bergotong royong..."></textarea>
             </div>
           </div>
 
           <!-- SECTION 2: PROFIL MURID & PEDAGOGIS -->
-          <div class="space-y-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-            <h3 class="text-xs font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+          <div class="space-y-3 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <i data-lucide="users" class="w-4 h-4 text-blue-600"></i> 2. Profil Murid & Pedagogis
             </h3>
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Minat & Karakteristik Murid</label>
-              <input type="text" id="minatMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" placeholder="contoh: Permainan tim, tantangan fisik, kompetisi sehat">
+              <input type="text" id="minatMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Permainan tim, tantangan fisik, kompetisi sehat">
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Gaya/Cara Belajar</label>
-                <input type="text" id="gayaBelajar" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" placeholder="contoh: Audio, Visual, Kinestetik">
+                <input type="text" id="gayaBelajar" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Audio, Visual, Kinestetik">
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Murid</label>
-                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" placeholder="contoh: Reguler dengan variasi kemampuan awal">
+                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Reguler dengan variasi kemampuan">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Model Pembelajaran</label>
-                <select id="modelPembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                <select id="modelPembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none bg-white">
                   <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
                   <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
                   <option value="Discovery Learning">Discovery Learning</option>
@@ -269,63 +291,63 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Metode Pembelajaran</label>
-                <input type="text" id="metodePembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" placeholder="contoh: Diskusi, Praktik, Mini Tournament">
+                <input type="text" id="metodePembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Diskusi, Praktik, Mini Tournament">
               </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Sarana, Prasarana & Tautan Video</label>
-              <input type="text" id="sarana" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none mb-2" placeholder="contoh: Lapangan, Bola, Cone, Peluit, Proyektor">
-              <input type="text" id="videoLink" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" placeholder="contoh: Tautan Video YouTube (https://youtu.be/xxx)">
+              <input type="text" id="sarana" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none mb-2" placeholder="contoh: Lapangan, Bola, Cone, Peluit">
+              <input type="text" id="videoLink" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Tautan Video YouTube (https://youtu.be/xxx)">
             </div>
           </div>
 
           <!-- SECTION 3: 8 DIMENSI PROFIL LULUSAN (DPL) -->
-          <div class="space-y-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xs font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+          <div class="space-y-2.5 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+              <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
                 <i data-lucide="check-square" class="w-4 h-4 text-blue-600"></i> 3. Dimensi Profil Lulusan (DPL)
               </h3>
-              <span class="text-[10px] text-slate-500 font-medium">Pilih yang sesuai</span>
+              <span class="text-[10px] text-slate-500 font-semibold">Pilih Terkait</span>
             </div>
 
             <div class="grid grid-cols-2 gap-2 text-xs">
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 1: Keimanan & Ketaqwaan" class="rounded text-blue-600 focus:ring-blue-500" id="dpl1" checked>
                 <span class="font-medium text-slate-700">DPL 1: Keimanan & Taqwa</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 2: Kewargaan" class="rounded text-blue-600 focus:ring-blue-500" id="dpl2" checked>
                 <span class="font-medium text-slate-700">DPL 2: Kewargaan</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 3: Penalaran Kritis" class="rounded text-blue-600 focus:ring-blue-500" id="dpl3" checked>
                 <span class="font-medium text-slate-700">DPL 3: Penalaran Kritis</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 4: Kreativitas" class="rounded text-blue-600 focus:ring-blue-500" id="dpl4" checked>
                 <span class="font-medium text-slate-700">DPL 4: Kreativitas</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 5: Kolaborasi" class="rounded text-blue-600 focus:ring-blue-500" id="dpl5" checked>
                 <span class="font-medium text-slate-700">DPL 5: Kolaborasi</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 6: Kemandirian" class="rounded text-blue-600 focus:ring-blue-500" id="dpl6" checked>
                 <span class="font-medium text-slate-700">DPL 6: Kemandirian</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 7: Kesehatan" class="rounded text-blue-600 focus:ring-blue-500" id="dpl7" checked>
                 <span class="font-medium text-slate-700">DPL 7: Kesehatan</span>
               </label>
 
-              <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400">
+              <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-400 transition">
                 <input type="checkbox" name="dimensi" value="DPL 8: Komunikasi" class="rounded text-blue-600 focus:ring-blue-500" id="dpl8" checked>
                 <span class="font-medium text-slate-700">DPL 8: Komunikasi</span>
               </label>
@@ -333,48 +355,48 @@
           </div>
 
           <!-- SECTION 4: DATA ADMINISTRASI & TTD -->
-          <div class="space-y-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-            <h3 class="text-xs font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+          <div class="space-y-3 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <i data-lucide="file-signature" class="w-4 h-4 text-blue-600"></i> 4. Pengesahan & Tanda Tangan
             </h3>
             
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Guru</label>
-                <input type="text" id="namaGuru" placeholder="contoh: Nama Guru, S.Pd." class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="namaGuru" placeholder="contoh: Nama Guru, S.Pd." class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">NIP / NIPPPK Guru</label>
-                <input type="text" id="nipGuru" placeholder="contoh: 19910815 202012 1 003" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                <input type="text" id="nipGuru" placeholder="contoh: 19910815 202012 1 003" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Kepala Sekolah</label>
-                <input type="text" id="namaKepsek" placeholder="contoh: Nama Kepsek, M.Pd." class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="namaKepsek" placeholder="contoh: Nama Kepsek, M.Pd." class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">NIP Kepala Sekolah</label>
-                <input type="text" id="nipKepsek" placeholder="contoh: 19720410 199802 1 001" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                <input type="text" id="nipKepsek" placeholder="contoh: 19720410 199802 1 001" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Satuan Pendidikan</label>
-                <input type="text" id="sekolah" placeholder="contoh: UPT SD Negeri Wotsogo 2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="sekolah" placeholder="contoh: UPT SD Negeri Wotsogo 2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kota & Tanggal Terbit</label>
-                <input type="text" id="instansi" placeholder="contoh: Surabaya, 02 Oktober 2026" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none" required>
+                <input type="text" id="instansi" placeholder="contoh: Surabaya, 02 Oktober 2026" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
             </div>
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 text-sm">
-            <i data-lucide="printer" class="w-5 h-5"></i> Generate Dokumen PPM Resmi
+          <button type="submit" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-700/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm">
+            <i data-lucide="file-check-2" class="w-5 h-5"></i> Generate Dokumen PPM Resmi
           </button>
         </form>
 
@@ -386,28 +408,33 @@
         <!-- Header Controls Preview -->
         <div class="flex flex-wrap items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm gap-3 no-print">
           <div class="flex items-center gap-2">
-            <i data-lucide="file-text" class="w-5 h-5 text-blue-700"></i>
-            <h2 class="text-sm font-bold text-slate-800">Pratinjau Dokumen PPM (Deep Learning)</h2>
+            <div class="p-2 bg-blue-50 text-blue-700 rounded-lg border border-blue-100">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-sm font-bold text-slate-900">Pratinjau Dokumen PPM (Deep Learning)</h2>
+              <p class="text-[11px] text-slate-500">Tampilan hasil siap cetak dan ekspor resmi</p>
+            </div>
           </div>
           
           <div id="actionButtons" class="hidden flex items-center gap-2">
-            <button onclick="printDocument()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow">
-              <i data-lucide="printer" class="w-4 h-4"></i> Cetak / Save PDF
+            <button onclick="printDocument()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+              <i data-lucide="printer" class="w-4 h-4 text-blue-400"></i> Cetak / Save PDF
             </button>
-            <button id="downloadBtn" onclick="downloadWord()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow">
-              <i data-lucide="download" class="w-4 h-4"></i> Export (.DOC)
+            <button id="downloadBtn" onclick="downloadWord()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+              <i data-lucide="file-down" class="w-4 h-4"></i> Export (.DOC)
             </button>
           </div>
         </div>
 
         <!-- Document Render Area -->
-        <div id="outputContainer" class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-sm min-h-[700px] text-slate-900 text-sm leading-relaxed overflow-x-auto">
+        <div id="outputContainer" class="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xl min-h-[700px] text-slate-900 text-sm leading-relaxed overflow-x-auto">
           <div class="flex flex-col items-center justify-center h-96 text-slate-400 text-center p-6 no-print">
-            <div class="p-4 bg-slate-100 rounded-full mb-3 border border-slate-200">
-              <i data-lucide="file-spreadsheet" class="w-12 h-12 stroke-1 text-slate-500"></i>
+            <div class="p-4 bg-slate-100 rounded-2xl mb-3 border border-slate-200/80 shadow-inner">
+              <i data-lucide="file-spreadsheet" class="w-12 h-12 stroke-1 text-slate-400"></i>
             </div>
             <h3 class="text-base font-bold text-slate-700 mb-1">Dokumen Belum Dihasilkan</h3>
-            <p class="text-xs text-slate-500 max-w-sm">Isi parameter di panel sebelah kiri, atau tekan tombol <b>"Contoh Sepak Bola"</b> di atas, lalu klik tombol <b>Generate Dokumen PPM Resmi</b>.</p>
+            <p class="text-xs text-slate-500 max-w-sm">Isi parameter di panel sebelah kiri, atau klik tombol <b>"Contoh Sepak Bola"</b> di atas, lalu tekan tombol <b>Generate Dokumen PPM Resmi</b>.</p>
           </div>
         </div>
 
@@ -417,7 +444,7 @@
   </div>
 
   <script>
-    // Master Password Secret Key
+    // Master Password Access Key
     const SECRET_ACCESS_KEY = "Pak.arpjokPPMGenerator99";
 
     // Initial load handler
@@ -432,7 +459,7 @@
       }
     });
 
-    // Toggle Password Visibility (Intip Kode)
+    // Toggle Password Visibility
     function togglePasswordVisibility() {
       const input = document.getElementById('passcodeInput');
       const icon = document.getElementById('togglePassIcon');
@@ -459,7 +486,7 @@
         unlockAppInterface();
       } else {
         alertBox.classList.remove('hidden');
-        document.getElementById('authAlertMsg').innerText = "Kode sandi rahasia salah! Silakan coba lagi.";
+        document.getElementById('authAlertMsg').innerText = "Kode sandi rahasia salah! Silakan periksa kembali.";
       }
     }
 
@@ -480,7 +507,7 @@
       lucide.createIcons();
     }
 
-    // Load Sample Data (Sepak Bola Reference)
+    // Load Sample Reference Data
     function loadSampleData() {
       document.getElementById('jenjang').value = "SD";
       document.getElementById('kelas').value = "V (Lima)";
@@ -591,7 +618,7 @@
             <li><b>Kegiatan 3 (Tantangan Kontekstual "Control Gate Challenge"):</b> Murid mengaplikasikan teknik melewati rintangan. Menjaga sasaran agar bola/gerakan tetap terkontrol secara rapi.</li>
           `;
         } else if (i === 2) {
-          subTitle = `Pengembangan Kombinasi & Kerja Sama Tim ("Mini Game")`;
+          subTitle = `Pengembangan Kombinasi & Kerja Sama Tim ("Mini Game 3 vs 3")`;
           iceBreakingName = `Passing/Movement Circle Game`;
           focusTag = "Kerja Sama Tim, Komunikasi, & Taktik Sederhana";
           kegIntiDetail = `
@@ -1043,37 +1070,37 @@
               </ol>
             </div>
 
-            <!-- LAMPIRAN 7 -->
+            <!-- LAMPIRAN 7 (CLEAN REFLECTION CARDS FOR ALL BROWSERS & WORD EXPORT) -->
             <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 7: LEMBAR REFLEKSI MURID ("KARTU FEELING")</h4>
             <div style="border: 2px dashed #000000; padding: 12px; background-color: #fafafa; font-size: 9pt;">
               <p style="text-align: center; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
                 Bagaimana Perasaanmu Setelah Mengikuti Pembelajaran Hari Ini?
               </p>
-              <p style="margin-bottom: 12px; text-align: center;">Lingkari atau beri tanda centang (✓) pada emoticon yang sesuai dengan perasaanmu!</p>
+              <p style="margin-bottom: 12px; text-align: center;">Lingkari atau beri tanda centang (✓) pada kotak ekspresi yang sesuai dengan perasaanmu!</p>
               
               <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; text-align: center;">
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">😊</div>
+                  <div style="font-size: 18pt; font-weight: bold;">😊</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Senang</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">🤩</div>
+                  <div style="font-size: 18pt; font-weight: bold;">😃</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Gembira</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">🤔</div>
+                  <div style="font-size: 18pt; font-weight: bold;">🤔</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Bingung</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">😓</div>
+                  <div style="font-size: 18pt; font-weight: bold;">😫</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Lelah</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">😠</div>
+                  <div style="font-size: 18pt; font-weight: bold;">😤</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Kesal</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
-                  <div style="font-size: 20pt;">😢</div>
+                  <div style="font-size: 18pt; font-weight: bold;">😢</div>
                   <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Sedih</div>
                 </div>
               </div>
@@ -1142,4 +1169,3 @@
   </script>
 </body>
 </html>
-```
