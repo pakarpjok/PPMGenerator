@@ -161,7 +161,7 @@
             <div class="flex items-center gap-2">
               <h1 class="text-lg sm:text-xl font-black text-white tracking-tight">PPM Generator Pro</h1>
               <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                <i data-lucide="sparkles" class="w-3 h-3"></i> Premium Enterprise
+                <i data-lucide="sparkles" class="w-3 h-3"></i> Universal Subject Multi-Mapel
               </span>
             </div>
             <p class="text-xs text-slate-400 font-medium">Platform Perencanaan Pembelajaran Mendalam (Deep Learning)</p>
@@ -169,8 +169,11 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <button type="button" onclick="loadSampleData()" class="text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
-            <i data-lucide="wand-2" class="w-4 h-4 text-blue-400"></i> Contoh Sepak Bola
+          <button type="button" onclick="loadSampleFisika()" class="text-xs font-bold bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
+            <i data-lucide="atom" class="w-4 h-4 text-amber-400"></i> Contoh Fisika
+          </button>
+          <button type="button" onclick="loadSampleData()" class="text-xs font-bold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
+            <i data-lucide="wand-2" class="w-4 h-4 text-blue-400"></i> Contoh PJOK
           </button>
           <button type="button" onclick="resetForm()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
             <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-400"></i> Reset
@@ -217,7 +220,7 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas & Semester</label>
                 <div class="grid grid-cols-2 gap-1">
-                  <input type="text" id="kelas" placeholder="mis: V (Lima)" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                  <input type="text" id="kelas" placeholder="mis: XI (Sebelas)" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
                   <select id="semester" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none bg-white">
                     <option value="Ganjil">Ganjil</option>
                     <option value="Genap">Genap</option>
@@ -229,11 +232,11 @@
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Mata Pelajaran</label>
-                <input type="text" id="mapel" placeholder="contoh: PJOK" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                <input type="text" id="mapel" placeholder="contoh: Fisika / PAI / IPA" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Materi Pokok</label>
-                <input type="text" id="materi" placeholder="contoh: Sepak Bola" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                <input type="text" id="materi" placeholder="contoh: Hukum Newton / Sholat Berjamaah" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
             </div>
 
@@ -244,7 +247,7 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">JP per Pertemuan</label>
-                <input type="number" id="jpPerPertemuan" min="1" max="8" placeholder="mis: 3" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-600 outline-none" required>
+                <input type="number" id="jpPerPertemuan" min="1" max="8" placeholder="mis: 2" oninput="updateCalculations()" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-bold focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
             </div>
 
@@ -275,7 +278,7 @@
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Minat & Karakteristik Murid</label>
-              <input type="text" id="minatMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Permainan tim, tantangan fisik, kompetisi sehat">
+              <input type="text" id="minatMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Eksperimen saintifik, analisis kasus kontekstual, diskusi interaktif">
             </div>
 
             <div class="grid grid-cols-2 gap-2.5">
@@ -285,7 +288,7 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Murid</label>
-                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Reguler variatif">
+                <input type="text" id="kategoriMurid" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Reguler heterogen">
               </div>
             </div>
 
@@ -293,8 +296,8 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Model Pembelajaran</label>
                 <select id="modelPembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none bg-white">
-                  <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
                   <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
+                  <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
                   <option value="Discovery Learning">Discovery Learning</option>
                   <option value="Inquiry Learning">Inquiry Learning</option>
                   <option value="Cooperative Learning">Cooperative Learning</option>
@@ -302,13 +305,13 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Metode Pembelajaran</label>
-                <input type="text" id="metodePembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Diskusi, Praktik, Mini Tournament">
+                <input type="text" id="metodePembelajaran" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="contoh: Eksperimen, Diskusi Kelompok, Presentasi">
               </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Sarana, Prasarana & Tautan Video</label>
-              <input type="text" id="sarana" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none mb-2" placeholder="contoh: Lapangan, Bola, Cone, Peluit">
+              <input type="text" id="sarana" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none mb-2" placeholder="contoh: Laboratorium, Alat Peraga, LCD Proyektor, Modul Ajar">
               <input type="text" id="videoLink" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" placeholder="Tautan Video Pembelajaran (URL YouTube)">
             </div>
           </div>
@@ -396,7 +399,7 @@
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Satuan Pendidikan</label>
-                <input type="text" id="sekolah" placeholder="contoh: UPT SD Negeri Wotsogo 2" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                <input type="text" id="sekolah" placeholder="contoh: SMA Negeri 1 Surabaya" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kota & Tanggal Terbit</label>
@@ -449,7 +452,7 @@
               <i data-lucide="file-spreadsheet" class="w-12 h-12 stroke-1 text-slate-400"></i>
             </div>
             <h3 class="text-base font-bold text-slate-700 mb-1">Dokumen Belum Dihasilkan</h3>
-            <p class="text-xs text-slate-500 max-w-sm">Isi form di panel kiri, atau klik tombol <b>"Contoh Sepak Bola"</b> di atas, lalu klik <b>Generate Dokumen PPM Resmi</b>.</p>
+            <p class="text-xs text-slate-500 max-w-sm">Isi form di panel kiri, atau klik sampel tombol di atas, lalu klik <b>Generate Dokumen PPM Resmi</b>.</p>
           </div>
         </div>
 
@@ -471,7 +474,6 @@
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       
-      // Memeriksa status sesi otentikasi
       if (sessionStorage.getItem('ppm_auth_token') === 'GRANTED_2026') {
         unlockAppInterface();
       } else {
@@ -501,7 +503,6 @@
       const enteredCode = inputEl.value.trim();
       const alertBox = document.getElementById('authAlert');
 
-      // Proteksi ketat: Pastikan input persis dengan kode rahasia
       if (enteredCode === SECRET_ACCESS_KEY) {
         sessionStorage.setItem('ppm_auth_token', 'GRANTED_2026');
         alertBox.classList.add('hidden');
@@ -529,6 +530,37 @@
       document.getElementById('passcodeInput').value = '';
       document.getElementById('authAlert').classList.add('hidden');
       lucide.createIcons();
+    }
+
+    /* Sampel Fisika untuk Pengujian Multi-Mapel Fleksibel */
+    function loadSampleFisika() {
+      document.getElementById('jenjang').value = "SMA";
+      document.getElementById('kelas').value = "XI (Sebelas)";
+      document.getElementById('semester').value = "Ganjil";
+      document.getElementById('mapel').value = "Fisika";
+      document.getElementById('materi').value = "Hukum Newton tentang Gerak";
+      document.getElementById('pertemuan').value = "3";
+      document.getElementById('jpPerPertemuan').value = "2";
+      
+      document.getElementById('minatMurid').value = "Eksperimen laboratorium, fenomena alam kehidupan sehari-hari, simulasi digital, dan problem solving.";
+      document.getElementById('gayaBelajar').value = "Visual, Kinestetik, Analitis";
+      document.getElementById('kategoriMurid').value = "Peserta didik reguler dengan pemahaman sains mendasar.";
+      document.getElementById('modelPembelajaran').value = "Problem Based Learning (PBL)";
+      document.getElementById('metodePembelajaran').value = "Eksperimen Praktikum, Diskusi Analitis, Demonstrasi, Presentasi";
+      document.getElementById('sarana').value = "Laboratorium Fisika, Beban Gantung, Katrol, Papan Luncur, Sensor Gerak/Stopwatch, LCD Proyektor";
+      document.getElementById('videoLink').value = "https://www.youtube.com/watch?v=kKKM8Y3XNiU";
+
+      document.getElementById('cp').value = "Peserta didik mampu menganalisis konsep gaya dan hubungan antara gaya, massa, dan percepatan pada Hukum Newton serta mengaplikasikannya dalam menyelesaikan permasalahan kehidupan sehari-hari.";
+      document.getElementById('tp').value = "Murid mampu menganalisis fenomena Hukum I, II, dan III Newton melalui percobaan mandiri/kelompok, memformulasikan hubungan matematisnya, dan menyajikan solusi studi kasus nyata secara kritis dan kolaboratif.";
+
+      document.getElementById('namaGuru').value = "Dr. Ahmad Hidayat, M.Si.";
+      document.getElementById('nipGuru').value = "19850312 201101 1 005";
+      document.getElementById('namaKepsek').value = "Dra. Siti Rahmah, M.Pd.";
+      document.getElementById('nipKepsek').value = "19700518 199603 2 002";
+      document.getElementById('sekolah').value = "SMA Negeri 1 Surabaya";
+      document.getElementById('instansi').value = "Surabaya, 02 Oktober 2026";
+
+      updateCalculations();
     }
 
     function loadSampleData() {
@@ -592,7 +624,6 @@
     function generatePPM(e) {
       if (e) e.preventDefault();
 
-      // Memastikan user terotorisasi sebelum eksekusi generate
       if (sessionStorage.getItem('ppm_auth_token') !== 'GRANTED_2026') {
         lockSession();
         return;
@@ -661,6 +692,7 @@
       let meetingsHTML = '';
       let mediaAjarRows = '';
       
+      // GENERATOR DINAMIK SESUAI INPUT MATERI USER
       for (let i = 1; i <= pertemuanCount; i++) {
         let subTitle = "";
         let iceBreakingName = "";
@@ -668,31 +700,31 @@
         let focusTag = "";
 
         if (i === 1) {
-          subTitle = `Pengenalan Dasar Teknik & Kontrol Gerak ${materi}`;
-          iceBreakingName = `Game "Follow the Leader Movement"`;
-          focusTag = "Pengenalan Teknik Dasar, Formasi & Akurasi";
+          subTitle = `Pengenalan Konsep Dasar & Orientasi Permasalahan ${materi}`;
+          iceBreakingName = `Aktivitas Pemantik Awal "Focus & Brain Games"`;
+          focusTag = `Penguasaan Konsep Dasar, Orientasi Masalah & Identifikasi ${materi}`;
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Pengenalan Konsep):</b> Guru memperagakan demonstrasi teknik dasar ${materi}. Murid mengamati posisi tubuh dan perkenaan gerak. (Video Pembelajaran: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video</a>)</li>
-            <li><b>Kegiatan 2 (Latihan Berpasangan):</b> Murid berlatih secara berpasangan melakukan gerakan dasar secara perlahan, saling memberi input dan koreksi gerakan.</li>
-            <li><b>Kegiatan 3 (Tantangan "Control Gate Challenge"):</b> Murid mengaplikasikan teknik melewati rintangan untuk mengasah akurasi gerak secara terkontrol.</li>
+            <li><b>Kegiatan 1 (Orientasi Masalah):</b> Guru menyajikan stimulus berupa demonstrasi/studi kasus nyata tentang ${materi}. Murid mengamati dan mengidentifikasi permasalahan dasar. (Media Pembelajaran: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video / Visual</a>)</li>
+            <li><b>Kegiatan 2 (Eksplorasi Konsep):</b> Murid bekerja secara berpasangan atau kelompok kecil untuk mendiskusikan konsep utama ${materi} menggunakan panduan LKM.</li>
+            <li><b>Kegiatan 3 (Tantangan Penalaran "Problem Challenge"):</b> Murid menganalisis contoh kasus nyata yang berkaitan dengan ${materi} dan merumuskan hipotesis penyelesaiannya.</li>
           `;
         } else if (i === 2) {
-          subTitle = `Pengembangan Kombinasi & Kerja Sama Tim ("Mini Game 3 vs 3")`;
-          iceBreakingName = `Passing & Movement Circle Game`;
-          focusTag = "Kerja Sama Tim, Komunikasi, & Taktik Sederhana";
+          subTitle = `Eksplorasi Mendalam, Investigasi & Kerja Sama Kelompok (${materi})`;
+          iceBreakingName = `Game "Interactive Mind Mapping & Coordination"`;
+          focusTag = "Investigasi Kelompok, Analisis Data & Penerapan Konsep";
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Latihan Variasi & Kontrol):</b> Guru memperagakan variasi teknik lanjutan. Murid berlatih dalam formasi bergerak.</li>
-            <li><b>Kegiatan 2 (Triangle/Square Drill):</b> Murid membentuk kelompok kecil, mengalirkan umpan sambil bergerak aktif menempati ruang kosong.</li>
-            <li><b>Kegiatan 3 (Mini Game Terstruktur 3 vs 3):</b> Permainan kecil dengan aturan modifikasi (wajib 3 kali umpan sebelum mencetak poin) untuk menguatkan kerja sama.</li>
+            <li><b>Kegiatan 1 (Pengembangan Informasi):</b> Guru mengarahkan murid melakukan pemodelan, praktikum, atau studi literatur lanjutan terkait ${materi}.</li>
+            <li><b>Kegiatan 2 (Diskusi & Simulasi Kelompok):</b> Murid dalam kelompok kecil mengolah data/informasi, berdiskusi memecahkan tantangan ${materi}, dan merancang gagasan solusi.</li>
+            <li><b>Kegiatan 3 (Penerapan Terstruktur):</b> Kelompok menguji solusi atau menyusun draf laporan temuan terkait materi ${materi} dengan bimbingan fasilitatif dari guru.</li>
           `;
         } else {
-          subTitle = `Aplikasi Nyata & Mini Tournament (${modelPembelajaran})`;
-          iceBreakingName = `Rhythm & Agility Movement`;
-          focusTag = "Aplikasi Strategi, Turnamen Modifikasi, & Sportivitas";
+          subTitle = `Aplikasi Nyata, Evaluasi & Presentasi Karya (${modelPembelajaran})`;
+          iceBreakingName = `Aktivitas Kebugaran Pikiran "Energizer Teamwork"`;
+          focusTag = "Presentasi Hasil, Sintesis Konsep, & Evaluasi Solusi";
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Pembentukan Tim & Strategi):</b> Murid terbagi ke dalam tim, menentukan nama tim serta mendiskusikan pembagian peran.</li>
-            <li><b>Kegiatan 2 (Team Alignment Drill):</b> Pemanasan taktis beregu untuk menyesuaikan koordinasi antar anggota kelompok.</li>
-            <li><b>Kegiatan 3 (Mini Tournament PjBL):</b> Pelaksanaan pertandingan/simulasi antar tim dengan menekankan penerapan teknik dasar, strategi kelompok, dan sportivitas.</li>
+            <li><b>Kegiatan 1 (Finalisasi Karya/Produk):</b> Kelompok murid menyempurnakan hasil investigasi atau solusi kasus ${materi} yang telah dirancang.</li>
+            <li><b>Kegiatan 2 (Gelar Karya / Presentasi Kelompok):</b> Setiap kelompok mempresentasikan temuan atau hasil solusi ${materi} di depan kelas serta merespons tanggapan dari kelompok lain.</li>
+            <li><b>Kegiatan 3 (Evaluasi & Generalisasi Konsep):</b> Guru bersama murid menganalisis seluruh presentasi, memberikan penguatan konsep ${materi}, serta menarik kesimpulan umum.</li>
           `;
         }
 
@@ -713,13 +745,13 @@
                 <td style="vertical-align: top;">
                   <ul style="margin: 0; padding-left: 18px;">
                     <li>Guru mengucapkan salam, berdoa bersama, dan mengecek presensi murid.</li>
-                    <li><b>Apersepsi:</b> Mengulas kembali pentingnya kebugaran tubuh dan koordinasi gerak.</li>
+                    <li><b>Apersepsi:</b> Mengaitkan konsep ${materi} dengan pengalaman peserta didik dalam kehidupan sehari-hari.</li>
                     <li><b>Pertanyaan Pemantik:</b> 
-                      <br><i>"Bagaimana cara mengontrol gerak agar tidak mudah lepas saat dimainkan?"</i>
-                      <br><i>"Mengapa kerja sama tim jauh lebih efektif daripada bermain sendiri?"</i>
+                      <br><i>"Bagaimana fenomena ${materi} dapat mempengaruhi situasi dalam kehidupan kita?"</i>
+                      <br><i>"Mengapa pemahaman mendalam tentang ${materi} sangat penting untuk menyelesaikan persoalan tersebut?"</i>
                     </li>
-                    <li><b>Tujuan Pembelajaran:</b> Menyampaikan fokus keterampilan yang akan dicapai.</li>
-                    <li><b>Pemanasan / Ice Breaking:</b> ${iceBreakingName} (Melatih kelincahan dan merangsang fokus).</li>
+                    <li><b>Tujuan Pembelajaran:</b> Menyampaikan fokus indikator keberhasilan pembelajaran hari ini.</li>
+                    <li><b>Pemanasan / Ice Breaking:</b> ${iceBreakingName} (Melatih konsentrasi dan keaktifan murid).</li>
                   </ul>
                 </td>
               </tr>
@@ -730,17 +762,17 @@
                   <ol style="margin: 0; padding-left: 18px;" type="1">
                     ${kegIntiDetail}
                   </ol>
-                  <p style="margin: 6px 0 0 0; font-size: 9pt;"><b>Diskusi Kelompok:</b> Murid menganalisis keseimbangan gerak dan pembagian peran dalam kelompok.</p>
+                  <p style="margin: 6px 0 0 0; font-size: 9pt;"><b>Diskusi Kelompok:</b> Murid menganalisis materi ${materi} secara kritis dan membagi peran anggota kelompok secara adil.</p>
                 </td>
               </tr>
               <tr>
                 <td style="font-weight: bold; vertical-align: top;">Penutup (15 Menit)</td>
                 <td style="vertical-align: top;">
                   <ul style="margin: 0; padding-left: 18px;">
-                    <li><b>Refleksi:</b> Murid menyampaikan gerakan yang paling mudah dan yang memerlukan latihan lanjutan.</li>
-                    <li><b>Apresiasi:</b> Memberikan apresiasi atas sportivitas, keberanian, dan keaktifan murid.</li>
-                    <li><b>Kesimpulan:</b> Menguatkan konsep bahwa penguasaan teknik dasar dan kolaborasi adalah kunci utama.</li>
-                    <li><b>Pendinginan & Doa:</b> Penguluran otot, informasi materi berikutnya, dan doa penutup.</li>
+                    <li><b>Refleksi:</b> Murid menyampaikan pemahaman yang didapat serta bagian dari materi ${materi} yang masih memerlukan pendalaman.</li>
+                    <li><b>Apresiasi:</b> Guru memberikan apresiasi atas partisipasi aktif, kerja sama, dan ketelitian murid.</li>
+                    <li><b>Kesimpulan:</b> Merumuskan kesimpulan bersama mengenai prinsip dasar ${materi}.</li>
+                    <li><b>Tindak Lanjut & Doa:</b> Informasi kegiatan/materi berikutnya dan doa penutup.</li>
                   </ul>
                 </td>
               </tr>
@@ -751,11 +783,11 @@
         mediaAjarRows += `
           <tr>
             <td style="text-align: center; font-weight: bold;">${i}</td>
-            <td>Memahami dan mempraktikkan ${subTitle} secara terkontrol dan penuh tanggung jawab.</td>
+            <td>Memahami dan mengaplikasikan ${subTitle} secara analitis dan penuh tanggung jawab.</td>
             <td>${materi} (Bagian ${i})</td>
-            <td>Pemanasan Dinamis & ${iceBreakingName}</td>
-            <td>Demonstrasi, Latihan Terbimbing, Tantangan Kelompok / Mini Game</td>
-            <td>Pendinginan, Refleksi Kartu Feeling, Penilaian Formatif Observasi</td>
+            <td>Aktivitas Pemantik & ${iceBreakingName}</td>
+            <td>Eksplorasi Konsep, Investigasi Terbimbing, Tantangan Kelompok / Presentasi</td>
+            <td>Refleksi Mandiri, Penilaian Formatif Observasi & Kinerja Kelompok</td>
           </tr>
         `;
       }
@@ -822,7 +854,7 @@
             </tr>
             <tr>
               <td><b>Lingkungan Belajar</b></td>
-              <td>Ruang kelas interaktif dan halaman/lapangan sekolah yang aman</td>
+              <td>Ruang kelas interaktif dan laboratorium/ruang eksplorasi yang kondusif</td>
             </tr>
             <tr>
               <td><b>Kategori Murid</b></td>
@@ -881,15 +913,15 @@
             <tr>
               <td width="30%"><b>Kemitraan Pembelajaran</b></td>
               <td>
-                <b>Wali Kelas:</b> Monitoring kedisiplinan dan pengembangan karakter.<br>
-                <b>Orang Tua:</b> Dukungan motivasi latihan mandiri dan penerapan hidup sehat di rumah.
+                <b>Wali Kelas:</b> Monitoring kedisiplinan dan pengembangan karakter murid.<br>
+                <b>Orang Tua:</b> Dukungan motivasi belajar mandiri dan pendampingan tugas di rumah.
               </td>
             </tr>
             <tr>
               <td><b>Lingkungan Pembelajaran</b></td>
               <td>
-                <b>Budaya Belajar:</b> Saling menghargai, kolaboratif, jujur, dan sportif.<br>
-                <b>Ruang Fisik & Virtual:</b> Lapangan sekolah yang bersih dan aman; Tautan video pembelajaran interaktif.
+                <b>Budaya Belajar:</b> Saling menghargai, kolaboratif, bernalar kritis, dan jujur.<br>
+                <b>Ruang Fisik & Virtual:</b> Ruang kelas/laboratorium yang representatif; Tautan video dan modul pembelajaran interaktif.
               </td>
             </tr>
           </table>
@@ -904,19 +936,19 @@
             <tr>
               <td><b>1. Memahami (Mindful)</b></td>
               <td style="text-align: justify;">
-                <b>Pemantik Kontekstual & Diskusi:</b> Guru menjelaskan konsep dasar ${materi}. Murid mengamati demonstrasi/video, mendiskusikan LKM bersama kelompok mengenai perbedaan fungsi gerakan, momen penggunaan teknik, serta menjaga keseimbangan posisi tubuh.
+                <b>Pemantik Kontekstual & Diskusi:</b> Guru menjelaskan konsep mendasar mata pelajaran ${mapel} pada topik ${materi}. Murid mengamati tayangan/simulasi, mendiskusikan LKM bersama kelompok mengenai prinsip utama dan implikasi konsep tersebut.
               </td>
             </tr>
             <tr>
               <td><b>2. Mengaplikasi (Meaningful)</b></td>
               <td style="text-align: justify;">
-                Murid mempraktikkan langsung teknik ${materi} dalam permainan yang dimodifikasi. Murid diberi kebebasan bereksperimen mengatur tempo gerak, mengontrol posisi, serta menerapkan strategi kelompok secara dinamis.
+                Murid mempraktikkan atau mengaplikasikan langsung konsep ${materi} dalam bentuk pemecahan masalah atau proyek nyata. Murid diberi kebebasan bereksperimen, menguji hipotesis, dan menyusun argumen akademis.
               </td>
             </tr>
             <tr>
               <td><b>3. Merefleksi (Joyful)</b></td>
               <td style="text-align: justify;">
-                Murid secara beregu mendiskusikan kendala dan kemudahan yang dihadapi. Murid saling memberikan umpan balik, dilanjutkan refleksi mandiri mengisi <i>"Kartu Feeling"</i> untuk mengevaluasi perkembangan diri.
+                Murid secara beregu mendiskusikan kendala, temuan menarik, serta solusi yang diperoleh. Murid memberikan umpan balik konstruktif, dilanjutkan refleksi mandiri mengisi <i>"Kartu Feeling"</i> untuk mengevaluasi pengalaman belajarnya.
               </td>
             </tr>
           </table>
@@ -950,23 +982,23 @@
 
             <!-- LAMPIRAN 1 -->
             <h4 style="font-size: 10pt; font-weight: bold; margin: 12px 0 6px 0;">LAMPIRAN 1: INSTRUMEN ASESMEN AWAL (DIAGNOSTIK)</h4>
-            <p style="font-size: 9pt; margin-bottom: 6px;"><b>Tujuan:</b> Mengidentifikasi kesiapan awal murid dalam mempraktikkan keterampilan dasar ${materi}.</p>
+            <p style="font-size: 9pt; margin-bottom: 6px;"><b>Tujuan:</b> Mengidentifikasi kesiapan awal murid dalam memahami topik ${materi}.</p>
             <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt; margin-bottom: 10px;" border="1" cellpadding="4">
               <thead>
                 <tr style="background-color: #f1f5f9; text-align: center;">
                   <th width="5%">No</th>
                   <th width="20%">Nama Peserta Didik</th>
-                  <th width="15%">Penguasaan Teknik 1</th>
-                  <th width="15%">Kontrol & Akurasi</th>
-                  <th width="15%">Kelincahan Gerak</th>
+                  <th width="15%">Pemahaman Konsep Awal</th>
+                  <th width="15%">Kemampuan Analisis</th>
+                  <th width="15%">Keaktifan Berpendapat</th>
                   <th width="8%">Skor Total</th>
                   <th width="22%">Catatan Pengamatan & Tindak Lanjut</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td align="center">1</td><td>Ahmad Danial</td><td align="center">3</td><td align="center">2</td><td align="center">3</td><td align="center">8</td><td>Cukup lancar, perlu bimbingan kontrol sasaran.</td></tr>
-                <tr><td align="center">2</td><td>Beti Nuraini</td><td align="center">2</td><td align="center">2</td><td align="center">2</td><td align="center">6</td><td>Diberikan pendampingan tutor sebaya.</td></tr>
-                <tr><td align="center">3</td><td>Citra Lestari</td><td align="center">4</td><td align="center">3</td><td align="center">4</td><td align="center">11</td><td>Mahir, dijadikan fasilitator kelompok.</td></tr>
+                <tr><td align="center">1</td><td>Ahmad Danial</td><td align="center">3</td><td align="center">2</td><td align="center">3</td><td align="center">8</td><td>Pemahaman baik, perlu sedikit bimbingan analisis kasus.</td></tr>
+                <tr><td align="center">2</td><td>Beti Nuraini</td><td align="center">2</td><td align="center">2</td><td align="center">2</td><td align="center">6</td><td>Diberikan pendampingan tambahan oleh tutor sebaya.</td></tr>
+                <tr><td align="center">3</td><td>Citra Lestari</td><td align="center">4</td><td align="center">3</td><td align="center">4</td><td align="center">11</td><td>Sangat mahir, siap menjadi ketua kelompok diskusi.</td></tr>
               </tbody>
             </table>
 
@@ -977,16 +1009,16 @@
                 <tr style="background-color: #f1f5f9; text-align: center;">
                   <th width="5%">No</th>
                   <th width="20%">Nama Peserta Didik</th>
-                  <th width="15%">Teknik Dasar (Akurasi)</th>
-                  <th width="15%">Kontrol & Keseimbangan</th>
-                  <th width="15%">Kerja Sama Tim</th>
+                  <th width="15%">Penguasaan Materi ${materi}</th>
+                  <th width="15%">Penalaran Kritis & Problem Solving</th>
+                  <th width="15%">Kerja Sama Kelompok</th>
                   <th width="8%">Skor</th>
                   <th width="22%">Kategori & Catatan Anekdotal</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td align="center">1</td><td>Ahmad Danial</td><td align="center">3</td><td align="center">3</td><td align="center">4</td><td align="center">10</td><td><b>Tuntas</b> - Sangat kooperatif dalam kelompok.</td></tr>
-                <tr><td align="center">2</td><td>Beti Nuraini</td><td align="center">2</td><td align="center">3</td><td align="center">3</td><td align="center">8</td><td><b>Berkembang</b> - Perlu penguatan pada akurasi gerak.</td></tr>
+                <tr><td align="center">1</td><td>Ahmad Danial</td><td align="center">3</td><td align="center">3</td><td align="center">4</td><td align="center">10</td><td><b>Tuntas</b> - Mampu menjelaskan argumen dengan logis.</td></tr>
+                <tr><td align="center">2</td><td>Beti Nuraini</td><td align="center">2</td><td align="center">3</td><td align="center">3</td><td align="center">8</td><td><b>Berkembang</b> - Perlu penguatan pada pemahaman rumus/konsep.</td></tr>
               </tbody>
             </table>
             
@@ -1011,25 +1043,25 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><b>Penguasaan Teknik Dasar ${materi}</b></td>
-                  <td>Gerakan belum sesuai prinsip teknis dasar dan kurang kontrol.</td>
-                  <td>Cukup sesuai namun masih belum konsisten.</td>
-                  <td>Tepat sasaran dan kontrol gerakan cukup baik.</td>
-                  <td>Sangat tepat, stabil, dan terarah dengan sempurna.</td>
+                  <td><b>Penguasaan Konsep ${materi}</b></td>
+                  <td>Belum memahami prinsip dasar materi secara tepat.</td>
+                  <td>Memahami prinsip dasar namun masih ragu dalam penjelasannya.</td>
+                  <td>Memahami konsep dengan baik dan menjelaskan secara terstruktur.</td>
+                  <td>Memahami konsep secara mendalam serta mampu menghubungkan dengan konteks baru.</td>
                 </tr>
                 <tr>
-                  <td><b>Kontrol & Keseimbangan</b></td>
-                  <td>Kesulitan menjaga keseimbangan dan sering lepas kontrol.</td>
-                  <td>Gerakan teratur tetapi belum stabil saat bergerak dinamis.</td>
-                  <td>Kontrol cukup baik dan stabil dalam situasi permainan.</td>
-                  <td>Kontrol sangat presisi, cepat, dan seimbang dalam situasi dinamis.</td>
+                  <td><b>Penalaran Kritis & Analisis</b></td>
+                  <td>Kesulitan menganalisis masalah dan belum dapat merumuskan solusi.</td>
+                  <td>Dapat menganalisis masalah dasar dengan bantuan petunjuk guru.</td>
+                  <td>Mampu menganalisis masalah secara mandiri dan memberikan solusi yang masuk akal.</td>
+                  <td>Mampu menganalisis fenomena kompleks dan menyusun solusi inovatif serta presisi.</td>
                 </tr>
                 <tr>
-                  <td><b>Kerja Sama Tim & Sportivitas</b></td>
-                  <td>Kurang aktif dalam kerja sama tim dan cenderung individualis.</td>
-                  <td>Terlibat dalam tim namun komunikasi masih terbatas.</td>
-                  <td>Aktif bekerja sama dan komunikatif dengan teman.</td>
-                  <td>Sangat aktif, komunikatif, dan menjadi penggerak tim yang sportif.</td>
+                  <td><b>Kolaborasi & Komunikasi</b></td>
+                  <td>Pasif dalam diskusi kelompok dan kurang berkomunikasi.</td>
+                  <td>Terlibat diskusi kelompok namun masih terbatas saat menyampaikan ide.</td>
+                  <td>Aktif berdiskusi dan mampu menyampaikan gagasan secara jelas.</td>
+                  <td>Sangat aktif, komunikatif, serta mampu mengarahkan diskusi kelompok secara efektif.</td>
                 </tr>
               </tbody>
             </table>
@@ -1038,42 +1070,42 @@
             <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 4: MIND MAPPING RANGKUMAN MATERI</h4>
             <div style="border: 1px solid #000000; padding: 10px; background-color: #fcfcfc; margin-bottom: 20px; font-size: 9pt;">
               <p style="text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; text-decoration: underline;">
-                MIND MAP : RANGKUMAN KONSEP ${materi.toUpperCase()}
+                MIND MAP : RANGKUMAN KONSEP ${materi.toUpperCase()} (${mapel.toUpperCase()})
               </p>
               <table style="width: 100%; border-collapse: collapse;" border="1" cellpadding="6">
                 <tr>
                   <td width="50%" style="vertical-align: top;">
-                    <b>1. Penguasaan Teknik Utama:</b>
+                    <b>1. Prinsip & Konsep Kunci:</b>
                     <ul style="margin:2px 0 0 0; padding-left:16px;">
-                      <li>Sikap awal berdiri seimbang.</li>
-                      <li>Pandangan mengawasi sasaran dan ruang sekitar.</li>
-                      <li>Kontak perkenaan gerak yang presisi.</li>
+                      <li>Definisi dan hukum dasar ${materi}.</li>
+                      <li>Variabel dan komponen utama yang berpengaruh.</li>
+                      <li>Keterkaitan antar indikator atau konsep pendukung.</li>
                     </ul>
                   </td>
                   <td width="50%" style="vertical-align: top;">
-                    <b>2. Kontrol & Akurasi Gerak:</b>
+                    <b>2. Penerapan & Analisis Kontekstual:</b>
                     <ul style="margin:2px 0 0 0; padding-left:16px;">
-                      <li>Menjaga kontrol tetap dekat dalam jangkauan.</li>
-                      <li>Mengatur kecepatan dan ritme langkah.</li>
-                      <li>Menyesuaikan arah sesuai situasi strategi.</li>
+                      <li>Implementasi fenomena ${materi} pada kehidupan sehari-hari.</li>
+                      <li>Metode pemecahan masalah dan pemodelan.</li>
+                      <li>Studi kasus serta analisis dampak.</li>
                     </ul>
                   </td>
                 </tr>
                 <tr>
                   <td style="vertical-align: top;">
-                    <b>3. Kerja Sama & Taktik Kelompok:</b>
+                    <b>3. Kolaborasi & Investigasi:</b>
                     <ul style="margin:2px 0 0 0; padding-left:16px;">
-                      <li>Bermain dalam tim kecil (3 vs 3 / 4 vs 4).</li>
-                      <li>Komunikasi verbal dan non-verbal yang positif.</li>
-                      <li>Bergerak membuka ruang dan menghargai teman.</li>
+                      <li>Kerja sama dalam percobaan/diskusi kelompok.</li>
+                      <li>Komunikasi argumentatif berbasis bukti/data.</li>
+                      <li>Penyusunan laporan dan gagasan karya.</li>
                     </ul>
                   </td>
                   <td style="vertical-align: top;">
                     <b>4. Manfaat Pembelajaran Mendalam:</b>
                     <ul style="margin:2px 0 0 0; padding-left:16px;">
-                      <li>Meningkatkan kebugaran jasmani & koordinasi.</li>
-                      <li>Membangun penalaran kritis dan kreativitas gerak.</li>
-                      <li>Menumbuhkan kemandirian, empati, dan sportivitas.</li>
+                      <li>Mengembangkan kognisi bernalar kritis & kreatif.</li>
+                      <li>Menumbuhkan karakter mandiri, tekun, dan komunikatif.</li>
+                      <li>Memahami relevansi ilmu ${mapel} secara bermakna.</li>
                     </ul>
                   </td>
                 </tr>
@@ -1089,7 +1121,7 @@
                   <th width="22%">Tujuan Pembelajaran Khusus</th>
                   <th width="18%">Materi Pokok</th>
                   <th width="18%">Aktivitas Pemanasan</th>
-                  <th width="18%">Kegiatan Inti (PjBL)</th>
+                  <th width="18%">Kegiatan Inti (${modelPembelajaran.split(' ')[0]})</th>
                   <th width="16%">Penilaian</th>
                 </tr>
               </thead>
@@ -1105,29 +1137,29 @@
               <p style="margin: 0 0 10px 0;"><b>Nama Murid:</b> ................................................................ | <b>Kelompok:</b> ........................</p>
               
               <p style="font-weight: bold; border-bottom: 1.5px solid #000000; padding-bottom: 3px; margin-bottom: 8px; font-size: 9.5pt;">
-                A. PILIHAN GANDA (ANALISIS & EVALUASI SKENARIO)
+                A. PILIHAN GANDA (ANALISIS & EVALUASI CONTEXTUAL HOTS)
               </p>
               <ol style="margin: 0 0 14px 0; padding-left: 18px;">
                 <li style="margin-bottom: 10px;">
-                  <b>Skenario Studi Kasus:</b> Ketika tim Budi melakukan serangan balik cepat, lawan menerapkan tekanan ketat (*press*) di area pertahanan. Budi melihat dua rekannya berada di posisi berbeda: Roni berdiri bebas di area sayap yang luas, sementara Andi dijaga ketat di depan gawang lawan. Berdasarkan analisis situasi taktis tersebut, keputusan paling efektif yang harus diambil Budi adalah...
-                  <br>a. Memaksakan mengoper langsung ke Andi agar segera bisa mencetak gol.
-                  <br><b>b. Mengoper bola ke Roni di area terbuka untuk merenggangkan pertahanan lawan dan membuka ruang tembak baru.</b>
-                  <br>c. Menggiring bola sendiri menembus semua pemain lawan tanpa memperhitungkan risiko kehilangan bola.
-                  <br>d. Menghentikan bola sepenuhnya dan menunggu seluruh pemain lawan kembali ke posisi bertahan.
+                  <b>Studi Kasus Analitis:</b> Dalam sebuah eksperimen atau situasi nyata terkait topik <i>${materi}</i>, ditemukan bahwa perubahan salah satu variabel utama menyebabkan dampak signifikan terhadap hasil akhir. Berdasarkan analisis prinsip ${mapel}, tindakan atau keputusan ilmiah paling tepat yang harus diambil untuk mengoptimalkan kondisi tersebut adalah...
+                  <br>a. Mengabaikan variabel tersebut dan melanjutkan prosedur tanpa evaluasi.
+                  <br><b>b. Menganalisis keterkaitan variabel secara sistematis dan menyesuaikan strategi berdasarkan prinsip ${materi}.</b>
+                  <br>c. Mengubah seluruh instrumen penelitian tanpa melakukan kajian literatur terlebih dahulu.
+                  <br>d. Menghentikan seluruh proses studi tanpa menarik kesimpulan yang valid.
                 </li>
                 <li style="margin-bottom: 10px;">
-                  <b>Analisis Mekanika Gerak:</b> Saat menghentikan bola yang datang meluncur deras dari operan jarak jauh, seorang pemain sering mengalami pantulan bola yang terlalu jauh sehingga bola mudah direbut lawan. Evaluasi teknis yang tepat untuk memperbaiki kesalahan mekanika gerak tersebut adalah...
-                  <br>a. Menahan kaki penumpu secara kaku tepat di titik perkenaan bola.
-                  <br><b>b. Ditarik sedikit ke belakang (*absorbing momentum*) pada saat perkenaan agar menyerap kecepatan bola secara halus.</b>
-                  <br>c. Mendorong kaki ke depan secara keras guna menolak laju datangnya bola.
-                  <br>d. Melompat tinggi di tempat saat bola menyentuh permukaan tanah.
+                  <b>Evaluasi Konsep & Pemecahan Masalah:</b> Ketika peserta didik dihadapkan pada permasalahan kompleks terkait <i>${materi}</i> di mana terdapat perbedaan data antara teori dan hasil pengamatan di lapangan, langkah pemikiran kritis yang seharusnya dilakukan adalah...
+                  <br>a. Memanipulasi data pengamatan agar sesuai persis dengan teori yang ada di buku teks.
+                  <br><b>b. Menganalisis faktor-faktor penyebab penyimpangan data dan mengevaluasi asumsi dasar yang digunakan.</b>
+                  <br>c. Menyimpulkan bahwa teori yang dipelajari sama sekali tidak berguna dalam praktik.
+                  <br>d. Mengabaikan data pengamatan dan menyalin jawaban dari kelompok lain.
                 </li>
                 <li style="margin-bottom: 10px;">
-                  <b>Pengambilan Keputusan & Nilai Karakter:</b> Dalam simulasi mini tournament, tim kamu tertinggal 1 gol dan waktu tersisa 2 menit. Salah satu teman satu tim membuat kesalahan kontrol yang menyebabkan terjadinya gol lawan. Sebagai kapten tim yang menerapkan nilai kolaborasi dan penalaran kritis, tindakan paling tepat adalah...
-                  <br>a. Mengganti posisi teman tersebut secara sepihak dan menyalahkannya atas kekalahan.
-                  <br><b>b. Memberikan dorongan semangat, mengatur ulang posisi taktis secara cepat, dan fokus memanfaatkan sisa waktu secara kooperatif.</b>
-                  <br>c. Meminta wasit menghentikan pertandingan karena merasa putus asa.
-                  <br>d. Membiarkan permainan berjalan tanpa koordinasi dan bermain individualistis.
+                  <b>Pengambilan Keputusan & Nilai Karakter:</b> Saat melakukan kegiatan kelompok untuk menyelesaikan tugas <i>${materi}</i> pada mata pelajaran ${mapel}, salah satu anggota memiliki pendapat yang berbeda dengan mayoritas kelompok. Sebagai refleksi nilai kolaborasi dan penalaran kritis, tindakan paling bijak adalah...
+                  <br>a. Menolak pendapat anggota tersebut secara langsung agar tugas cepat selesai.
+                  <br><b>b. Menguji dan mendiskusikan argumen tersebut secara ilmiah dan terbuka bersama seluruh anggota tim.</b>
+                  <br>c. Mengeluarkan anggota tersebut dari daftar kelompok tanpa konfirmasi.
+                  <br>d. Membiarkan perbedaan pendapat tanpa ada keputusan bersama yang disepakati.
                 </li>
               </ol>
 
@@ -1136,11 +1168,11 @@
               </p>
               <ol style="margin: 0; padding-left: 18px;">
                 <li style="margin-bottom: 12px;">
-                  <b>Analisis Taktis & Mekanika:</b> Jelaskan perbedaan mendasar fungsi mekanika tubuh antara teknik mengoper (*passing*) menggunakan kaki bagian dalam dengan mengoper menggunakan punggung kaki dalam situasi pertandingan nyata! Momen spesifik seperti apa yang paling tepat untuk menggunakan masing-masing teknik tersebut?
+                  <b>Analisis Konsep Mendalam:</b> Jelaskan hubungan sebab-akibat antara variabel utama dalam topik <b>${materi}</b>! Berikan salah satu contoh nyata penerapannya dalam kehidupan sehari-hari beserta penjelasannya secara logis dan ilmiah!
                   <br><span style="color: #64748b; font-style: italic;">Jawaban: ........................................................................................................................................................................................................................................................................................................................................................................</span>
                 </li>
                 <li style="margin-bottom: 8px;">
-                  <b>Rancangan Strategi Kelompok:</b> Rancanglah sebuah strategi formasi dan alur pergerakan sederhana untuk tim yang terdiri dari 4 orang saat menghadapi tim lawan yang memiliki pertahanan sangat rapat di area tengah! Mengapa strategi tersebut menurut kelompokmu paling efektif?
+                  <b>Rancangan Gagasan / Solusi Kreatif:</b> Rancanglah sebuah skema, gagasan, atau langkah praktis yang dapat diterapkan untuk menyelesaikan permasalahan nyata di sekitar kita dengan memanfaatkan prinsip dasar dari mata pelajaran <b>${mapel}</b> pada materi <b>${materi}</b>! Mengapa solusi tersebut menurut kelompokmu paling efektif?
                   <br><span style="color: #64748b; font-style: italic;">Jawaban: ........................................................................................................................................................................................................................................................................................................................................................................</span>
                 </li>
               </ol>
@@ -1150,7 +1182,7 @@
             <h4 style="font-size: 10pt; font-weight: bold; margin: 16px 0 6px 0;">LAMPIRAN 7: LEMBAR REFLEKSI MURID ("KARTU FEELING")</h4>
             <div style="border: 2px dashed #000000; padding: 12px; background-color: #fafafa; font-size: 9pt;">
               <p style="text-align: center; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
-                Bagaimana Perasaanmu Setelah Mengikuti Pembelajaran Hari Ini?
+                Bagaimana Perasaanmu Setelah Mengikuti Pembelajaran ${mapel} Hari Ini?
               </p>
               <p style="margin-bottom: 12px; text-align: center;">Beri tanda centang (✓) atau lingkaran pada ekspresi yang paling sesuai!</p>
               
@@ -1161,11 +1193,11 @@
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
                   <div style="font-size: 20pt; font-weight: bold;">&#128515;</div>
-                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Gembira</div>
+                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Antusias</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
                   <div style="font-size: 20pt; font-weight: bold;">&#129300;</div>
-                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Bingung</div>
+                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Penasaran</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
                   <div style="font-size: 20pt; font-weight: bold;">&#128555;</div>
@@ -1173,7 +1205,7 @@
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
                   <div style="font-size: 20pt; font-weight: bold;">&#128548;</div>
-                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Kesal</div>
+                  <div style="font-weight: bold; font-size: 8pt; margin-top: 2px;">Bingung</div>
                 </div>
                 <div style="border: 1px solid #cccccc; padding: 8px; border-radius: 8px; background: #ffffff;">
                   <div style="font-size: 20pt; font-weight: bold;">&#128546;</div>
@@ -1182,7 +1214,7 @@
               </div>
 
               <div style="margin-top: 14px;">
-                <p style="margin: 0 0 4px 0; font-weight: bold;">Tuliskan 1 hal paling berkesan yang kamu pelajari hari ini:</p>
+                <p style="margin: 0 0 4px 0; font-weight: bold;">Tuliskan 1 hal paling berkesan yang kamu pelajari tentang ${materi} hari ini:</p>
                 <p style="margin: 0; color: #64748b; font-style: italic;">........................................................................................................................................................................................................</p>
               </div>
             </div>
