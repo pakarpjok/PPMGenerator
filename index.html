@@ -161,7 +161,7 @@
             <div class="flex items-center gap-2">
               <h1 class="text-lg sm:text-xl font-black text-white tracking-tight">PPM Generator Pro</h1>
               <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                <i data-lucide="sparkles" class="w-3 h-3"></i> Universal Subject Multi-Mapel
+                <i data-lucide="sparkles" class="w-3 h-3"></i> Ice Breaking Dinamis & Tematik
               </span>
             </div>
             <p class="text-xs text-slate-400 font-medium">Platform Perencanaan Pembelajaran Mendalam (Deep Learning)</p>
@@ -232,7 +232,7 @@
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Mata Pelajaran</label>
-                <input type="text" id="mapel" placeholder="contoh: Fisika / PAI / IPA" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
+                <input type="text" id="mapel" placeholder="contoh: Fisika / PAI / IPA / Matematika" class="w-full border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-blue-600 outline-none" required>
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Materi Pokok</label>
@@ -466,7 +466,7 @@
 
     const loadingMessages = [
       "Menganalisis parameter & Capaian Pembelajaran...",
-      "Menyusun skenario Deep Learning & matriks pedagogis...",
+      "Menyusun skenario Deep Learning & ice breaking tematik...",
       "Mengintegrasikan instrumen Asesmen HOTS & LKM Premium...",
       "Menerapkan sentuhan akhir & memformat dokumen resmi..."
     ];
@@ -532,7 +532,6 @@
       lucide.createIcons();
     }
 
-    /* Sampel Fisika untuk Pengujian Multi-Mapel Fleksibel */
     function loadSampleFisika() {
       document.getElementById('jenjang').value = "SMA";
       document.getElementById('kelas').value = "XI (Sebelas)";
@@ -621,6 +620,76 @@
       updateCalculations();
     }
 
+    /* FUNGSI UTAMA: MENENTUKAN ICE BREAKING KONTEKSTUAL BERDASARKAN MAPEL & MATERI */
+    function getIceBreakingByContext(mapel, materi, pertemuanKe) {
+      const m = mapel.toLowerCase();
+      const mat = materi.toLowerCase();
+
+      // CATEGORY 1: PJOK & OLAHRAGA
+      if (m.includes('pjok') || m.includes('penjas') || m.includes('olahraga')) {
+        if (pertemuanKe === 1) {
+          return `Simulasi Gerak "Tepuk Reaksi & Sinyal Peluit ${materi}" (Murid merespons komando gerak sesuai aba-aba materi secara presisi).`;
+        } else if (pertemuanKe === 2) {
+          return `Aktivitas "Estafet Bola & Cermin Gerak Kelompok" (Melatih kelincahan kaki, koordinasi tubuh, dan konsentrasi).`;
+        } else {
+          return `Game Energizer "Mini Arena & Tantangan Gerak Bersama" (Menumbuhkan semangat juang dan kerja sama tim).`;
+        }
+      }
+
+      // CATEGORY 2: FISIKA & IPA & KIMIA
+      if (m.includes('fisika') || m.includes('ipa') || m.includes('kimia') || m.includes('sains')) {
+        if (pertemuanKe === 1) {
+          return `Kuis Cepat "Tebak Fenomena & Aksi Reaksi ${materi}" (Murid menebak sebab-akibat fenomena Fisika di papan tulis secara interaktif).`;
+        } else if (pertemuanKe === 2) {
+          return `Game Fokus "Simulasi Gaya & Keseimbangan Tubuh" (Murid mempraktikkan contoh dorongan dan tarikan gaya secara berpasangan).`;
+        } else {
+          return `Energizer Kognitif "Rantai Istilah Sains & Kuis Cepat" (Menyebutkan variabel ${materi} secara beruntun tanpa terputus).`;
+        }
+      }
+
+      // CATEGORY 3: MATEMATIKA
+      if (m.includes('matematika') || m.includes('mtk')) {
+        if (pertemuanKe === 1) {
+          return `Game Otak "Tepuk Bilangan Kelipatan & Angka Ajaib" (Fokus pada ketelitian hitung cepat sebelum masuk materi ${materi}).`;
+        } else if (pertemuanKe === 2) {
+          return `Tantangan Logika "Pola Angka & Detektif Rumus" (Mencari pola tersembunyi dari kasus ${materi} secara berpasangan).`;
+        } else {
+          return `Kuis Interaktif "Bingo Matematika & Hitung Kilat" (Kompetisi sehat menyelesaikan soal hitungan singkat).`;
+        }
+      }
+
+      // CATEGORY 4: BAHASA (INDONESIA / INGGRIS / DAERAH)
+      if (m.includes('bahasa') || m.includes('english') || m.includes('indonesia')) {
+        if (pertemuanKe === 1) {
+          return `Permainan Kata "Sambung Kata & Kata Kunci ${materi}" (Murid menyusun kalimat spontan menggunakan istilah penting materi).`;
+        } else if (pertemuanKe === 2) {
+          return `Aktivitas "Tebak Gaya Bahasa & Ekspresi Dramatis" (Murid memperagakan makna atau kosakata materi tanpa bicara).`;
+        } else {
+          return `Tantangan Kreatif "Pantun / Yel-Yel Singkat Kelompok" (Membuat bait apresiasi singkat yang berhubungan dengan ${materi}).`;
+        }
+      }
+
+      // CATEGORY 5: AGAMA / PAI
+      if (m.includes('pai') || m.includes('agama') || m.includes('islam')) {
+        if (pertemuanKe === 1) {
+          return `Aktivitas "Sambung Ayat / Istilah Kebaikan ${materi}" (Saling melengkapi hafalan/istilah penting materi dengan khidmat).`;
+        } else if (pertemuanKe === 2) {
+          return `Game Edukatif "Kuis Kuis Cinta Keteladanan" (Mencocokkan perilaku terpuji dengan topik ${materi}).`;
+        } else {
+          return `Refleksi Diri "Tepuk Syukur & Lingkaran Kebaikan" (Membangun suasana kelas yang hangat dan religius).`;
+        }
+      }
+
+      // CATEGORY GENERAL (DEFAULT UNTUK MAPEL LAINNYA)
+      if (pertemuanKe === 1) {
+        return `Aktivitas Pemantik "Detektif Konsep & Kuis Cepat ${materi}" (Menguji fokus awal siswa dengan tebak gambar/istilah penting).`;
+      } else if (pertemuanKe === 2) {
+        return `Game Dinamis "Tepuk Karakter & Komunikasi Efektif" (Melatih kekompakan kelompok sebelum berdiskusi tentang ${materi}).`;
+      } else {
+        return `Energizer Tim "Yel-Yel & Kreativitas Kelompok" (Meningkatkan rasa percaya diri siswa saat mempresentasikan hasil).`;
+      }
+    }
+
     function generatePPM(e) {
       if (e) e.preventDefault();
 
@@ -695,13 +764,12 @@
       // GENERATOR DINAMIK SESUAI INPUT MATERI USER
       for (let i = 1; i <= pertemuanCount; i++) {
         let subTitle = "";
-        let iceBreakingName = "";
+        let iceBreakingName = getIceBreakingByContext(mapel, materi, i);
         let kegIntiDetail = "";
         let focusTag = "";
 
         if (i === 1) {
           subTitle = `Pengenalan Konsep Dasar & Orientasi Permasalahan ${materi}`;
-          iceBreakingName = `Aktivitas Pemantik Awal "Focus & Brain Games"`;
           focusTag = `Penguasaan Konsep Dasar, Orientasi Masalah & Identifikasi ${materi}`;
           kegIntiDetail = `
             <li><b>Kegiatan 1 (Orientasi Masalah):</b> Guru menyajikan stimulus berupa demonstrasi/studi kasus nyata tentang ${materi}. Murid mengamati dan mengidentifikasi permasalahan dasar. (Media Pembelajaran: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video / Visual</a>)</li>
@@ -710,7 +778,6 @@
           `;
         } else if (i === 2) {
           subTitle = `Eksplorasi Mendalam, Investigasi & Kerja Sama Kelompok (${materi})`;
-          iceBreakingName = `Game "Interactive Mind Mapping & Coordination"`;
           focusTag = "Investigasi Kelompok, Analisis Data & Penerapan Konsep";
           kegIntiDetail = `
             <li><b>Kegiatan 1 (Pengembangan Informasi):</b> Guru mengarahkan murid melakukan pemodelan, praktikum, atau studi literatur lanjutan terkait ${materi}.</li>
@@ -719,7 +786,6 @@
           `;
         } else {
           subTitle = `Aplikasi Nyata, Evaluasi & Presentasi Karya (${modelPembelajaran})`;
-          iceBreakingName = `Aktivitas Kebugaran Pikiran "Energizer Teamwork"`;
           focusTag = "Presentasi Hasil, Sintesis Konsep, & Evaluasi Solusi";
           kegIntiDetail = `
             <li><b>Kegiatan 1 (Finalisasi Karya/Produk):</b> Kelompok murid menyempurnakan hasil investigasi atau solusi kasus ${materi} yang telah dirancang.</li>
@@ -751,7 +817,7 @@
                       <br><i>"Mengapa pemahaman mendalam tentang ${materi} sangat penting untuk menyelesaikan persoalan tersebut?"</i>
                     </li>
                     <li><b>Tujuan Pembelajaran:</b> Menyampaikan fokus indikator keberhasilan pembelajaran hari ini.</li>
-                    <li><b>Pemanasan / Ice Breaking:</b> ${iceBreakingName} (Melatih konsentrasi dan keaktifan murid).</li>
+                    <li><b>Pemanasan / Ice Breaking Tematik:</b> <b>${iceBreakingName}</b>.</li>
                   </ul>
                 </td>
               </tr>
@@ -785,7 +851,7 @@
             <td style="text-align: center; font-weight: bold;">${i}</td>
             <td>Memahami dan mengaplikasikan ${subTitle} secara analitis dan penuh tanggung jawab.</td>
             <td>${materi} (Bagian ${i})</td>
-            <td>Aktivitas Pemantik & ${iceBreakingName}</td>
+            <td>${iceBreakingName}</td>
             <td>Eksplorasi Konsep, Investigasi Terbimbing, Tantangan Kelompok / Presentasi</td>
             <td>Refleksi Mandiri, Penilaian Formatif Observasi & Kinerja Kelompok</td>
           </tr>
@@ -1120,7 +1186,7 @@
                   <th width="8%">Pert.</th>
                   <th width="22%">Tujuan Pembelajaran Khusus</th>
                   <th width="18%">Materi Pokok</th>
-                  <th width="18%">Aktivitas Pemanasan</th>
+                  <th width="18%">Aktivitas Pemanasan / Ice Breaking</th>
                   <th width="18%">Kegiatan Inti (${modelPembelajaran.split(' ')[0]})</th>
                   <th width="16%">Penilaian</th>
                 </tr>
