@@ -10,6 +10,11 @@
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- Firebase Web SDK (v9/v10 Compat Mode) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
     
@@ -71,8 +76,12 @@
       pointer-events: none;
     }
 
-    /* Print & Word Export Layout (Kept Original Print Reset) */
+    /* Print & Word Export Layout Optimizations */
     @media print {
+      @page {
+        size: A4;
+        margin: 1.5cm;
+      }
       body {
         background: #ffffff !important;
         color: #000000 !important;
@@ -107,39 +116,58 @@
 </head>
 <body class="h-full text-slate-200 bg-[#090d16] antialiased flex flex-col min-h-screen selection:bg-indigo-600 selection:text-white">
 
-  <!-- ================= PASSCODE / LOGIN OVERLAY ================= -->
+  <!-- ================= LOGIN OVERLAY (FIREBASE AUTH) ================= -->
   <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop transition-all duration-500">
     <!-- Ambient Background Glows -->
     <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="bg-slate-900/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-800/80 max-w-md w-full p-7 sm:p-9 space-y-7 relative overflow-hidden glow-card">
+    <div class="bg-slate-900/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-800/80 max-w-md w-full p-7 sm:p-9 space-y-6 relative overflow-hidden glow-card">
       <div class="text-center space-y-3 relative z-10">
         <div class="w-16 h-16 bg-gradient-to-tr from-indigo-600 via-indigo-500 to-blue-500 text-white rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
-          <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+          <i data-lucide="user-check" class="w-8 h-8 text-white"></i>
         </div>
         <div>
-          <h2 class="text-2xl font-extrabold text-white tracking-tight">Konsol Akses PPM Pro</h2>
+          <h2 class="text-2xl font-extrabold text-white tracking-tight">Login Lisensi PPM Pro</h2>
           <p class="text-xs text-slate-400 mt-1.5 leading-relaxed max-w-xs mx-auto font-medium">
-            Sistem Perencanaan Pembelajaran Mendalam (Deep Learning). Masukkan kode rahasia untuk membuka aplikasi.
+            Masukkan Email terdaftar dan kata sandi Anda untuk mengakses Konsol Perencanaan Pembelajaran Mendalam.
           </p>
         </div>
       </div>
 
-      <form id="authForm" onsubmit="handleAuthentication(event)" class="space-y-4 relative z-10">
+      <form id="authForm" onsubmit="handleFirebaseLogin(event)" class="space-y-4 relative z-10">
+        <!-- Input Email -->
         <div class="space-y-1.5">
-          <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">Kode Rahasia Akses</label>
+          <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">Email Pengguna Terdaftar</label>
           <div class="relative flex items-center">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-              <i data-lucide="key-round" class="w-4 h-4"></i>
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </div>
+            <input 
+              type="email" 
+              id="emailInput" 
+              placeholder="nama@email.com" 
+              class="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/80 focus:border-indigo-500/80 transition-all shadow-inner"
+              required
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <!-- Input Password -->
+        <div class="space-y-1.5">
+          <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">Kata Sandi</label>
+          <div class="relative flex items-center">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i data-lucide="lock" class="w-4 h-4"></i>
             </div>
             <input 
               type="password" 
               id="passcodeInput" 
               placeholder="Masukkan kata sandi..." 
-              class="w-full pl-10 pr-12 py-3.5 bg-slate-950/80 border border-slate-800 rounded-xl text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/80 focus:border-indigo-500/80 transition-all shadow-inner"
+              class="w-full pl-10 pr-12 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/80 focus:border-indigo-500/80 transition-all shadow-inner"
               required
-              autocomplete="off"
+              autocomplete="current-password"
             >
             <button 
               type="button" 
@@ -152,18 +180,21 @@
           </div>
         </div>
 
-        <div id="authAlert" class="hidden p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-medium flex items-center gap-2.5 animate-shake">
+        <!-- Alert Error -->
+        <div id="authAlert" class="hidden p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-medium flex items-center gap-2.5">
           <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-rose-400"></i>
-          <span id="authAlertMsg">Kode sandi tidak valid! Silakan periksa kembali.</span>
+          <span id="authAlertMsg">Email atau kata sandi tidak valid!</span>
         </div>
 
-        <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/35 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-sm">
-          <i data-lucide="unlock" class="w-4 h-4"></i> Masuk Ke Konsol
+        <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/35 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+          <span id="loginSpinner" class="hidden spinner"></span>
+          <i id="loginBtnIcon" data-lucide="log-in" class="w-4 h-4"></i>
+          <span id="loginBtnText">Verifikasi & Masuk Konsol</span>
         </button>
       </form>
       
       <div class="pt-2 border-t border-slate-800/80 text-center">
-        <p class="text-[11px] text-slate-500 font-medium">Pengembangan Perangkat Ajar Kurikulum Merdeka Pro</p>
+        <p class="text-[11px] text-slate-500 font-medium">Sistem Lisensi 1 Akun 1 Perangkat Aktif</p>
       </div>
     </div>
   </div>
@@ -183,10 +214,10 @@
             <div class="flex items-center gap-2.5">
               <h1 class="text-base sm:text-lg font-black text-white tracking-tight">PPM Generator Pro</h1>
               <span class="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                <i data-lucide="sparkles" class="w-3 h-3"></i> Ice Breaking Dinamis & Tematik
+                <i data-lucide="shield-check" class="w-3 h-3"></i> Akun Terverifikasi
               </span>
             </div>
-            <p class="text-[11px] text-slate-400 font-medium">Platform Perencanaan Pembelajaran Mendalam (Deep Learning)</p>
+            <p id="userEmailBadge" class="text-[11px] text-slate-400 font-medium">Pengguna: -</p>
           </div>
         </div>
 
@@ -200,8 +231,8 @@
           <button type="button" onclick="resetForm()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/80 px-3 py-2 rounded-xl flex items-center gap-1.5 transition active:scale-95">
             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-slate-400"></i> Reset
           </button>
-          <button type="button" onclick="lockSession()" class="text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-xl flex items-center gap-1.5 transition active:scale-95" title="Kunci Aplikasi">
-            <i data-lucide="lock" class="w-3.5 h-3.5"></i> Keluar
+          <button type="button" onclick="handleLogout()" class="text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-xl flex items-center gap-1.5 transition active:scale-95" title="Keluar Akun">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Keluar
           </button>
         </div>
 
@@ -334,7 +365,7 @@
             <div>
               <label class="block text-[11px] font-semibold text-slate-400 mb-1">Sarana, Prasarana & Tautan Video</label>
               <input type="text" id="sarana" class="w-full bg-slate-900 border border-slate-700/80 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition mb-2" placeholder="contoh: Laboratorium, Alat Peraga, LCD">
-              <input type="text" id="videoLink" class="w-full bg-slate-900 border border-slate-700/80 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="Tautan Video Pembelajaran (URL YouTube)">
+              <input type="url" id="videoLink" class="w-full bg-slate-900 border border-slate-700/80 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="Tautan Video Pembelajaran (URL YouTube/Web)">
             </div>
           </div>
 
@@ -484,7 +515,30 @@
   </div>
 
   <script>
-    const SECRET_ACCESS_KEY = "Pak.arpjokPPMGenerator99";
+    // =========================================================================
+    // 1. KONFIGURASI FIREBASE PROJECT ANDA
+    // Gantilah konfigurasi di bawah dengan data resmi dari Firebase Console Anda!
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyYOUR_API_KEY_HERE",
+      authDomain: "your-app.firebaseapp.com",
+      databaseURL: "https://your-app-default-rtdb.firebaseio.com",
+      projectId: "your-app-id",
+      storageBucket: "your-app.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef"
+    };
+
+    // Inisialisasi Firebase App, Auth, dan Realtime Database
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    // ID Unik Sesi Per-Perangkat yang Sedang Aktif saat Ini
+    const currentDeviceId = "DEV_" + Math.random().toString(36).substring(2) + Date.now().toString(36);
+    let sessionUnsubscribe = null;
 
     const loadingMessages = [
       "Menganalisis parameter & Capaian Pembelajaran...",
@@ -493,16 +547,132 @@
       "Menerapkan sentuhan akhir & memformat dokumen resmi..."
     ];
 
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
-      
-      if (sessionStorage.getItem('ppm_auth_token') === 'GRANTED_2026') {
-        unlockAppInterface();
-      } else {
-        document.getElementById('authModal').classList.remove('hidden');
-        document.getElementById('appContainer').classList.add('hidden');
-      }
+
+      // Monitor Status Otentikasi Pengguna Firebase
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          monitorSingleDeviceSession(user);
+        } else {
+          showLoginModal();
+        }
+      });
     });
+
+    // =========================================================================
+    // 2. SISTEM 1 AKUN 1 PERANGKAT (SINGLE DEVICE LOCK VIA REALTIME DATABASE)
+    // =========================================================================
+    function monitorSingleDeviceSession(user) {
+      const userSessionRef = database.ref('active_sessions/' + user.uid);
+
+      // Dengarkan perubahan sesi secara Realtime
+      if (sessionUnsubscribe) sessionUnsubscribe();
+      
+      userSessionRef.on('value', (snapshot) => {
+        const activeDevId = snapshot.val();
+
+        if (activeDevId && activeDevId !== currentDeviceId) {
+          // Jika ID Sesi di database berubah (karena akun ini login di perangkat/browser lain)
+          userSessionRef.off();
+          alert("Sesi Login Berakhir: Akun ini baru saja digunakan untuk login di perangkat atau browser lain!");
+          auth.signOut();
+        } else if (!activeDevId) {
+          // Jika belum ada sesi tercatat di database, daftarkan Perangkat ini
+          userSessionRef.set(currentDeviceId);
+        }
+      });
+
+      document.getElementById('userEmailBadge').innerText = `Pengguna: ${user.email}`;
+      unlockAppInterface();
+    }
+
+    // =========================================================================
+    // 3. PROSES LOGIN & LOGOUT FIREBASE
+    // =========================================================================
+    function handleFirebaseLogin(e) {
+      if (e) e.preventDefault();
+
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passcodeInput').value.trim();
+      const alertBox = document.getElementById('authAlert');
+      const alertMsg = document.getElementById('authAlertMsg');
+
+      const loginBtn = document.getElementById('loginBtn');
+      const loginSpinner = document.getElementById('loginSpinner');
+      const loginBtnIcon = document.getElementById('loginBtnIcon');
+      const loginBtnText = document.getElementById('loginBtnText');
+
+      loginBtn.disabled = true;
+      loginSpinner.classList.remove('hidden');
+      loginBtnIcon.classList.add('hidden');
+      loginBtnText.innerText = "Memverifikasi...";
+      alertBox.classList.add('hidden');
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // Catat Sesi Perangkat Baru Ini di Realtime Database
+          return database.ref('active_sessions/' + user.uid).set(currentDeviceId);
+        })
+        .then(() => {
+          loginBtn.disabled = false;
+          loginSpinner.classList.add('hidden');
+          loginBtnIcon.classList.remove('hidden');
+          loginBtnText.innerText = "Verifikasi & Masuk Konsol";
+        })
+        .catch((error) => {
+          loginBtn.disabled = false;
+          loginSpinner.classList.add('hidden');
+          loginBtnIcon.classList.remove('hidden');
+          loginBtnText.innerText = "Verifikasi & Masuk Konsol";
+
+          alertBox.classList.remove('hidden');
+          if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            alertMsg.innerText = "Email atau kata sandi tidak valid / belum terdaftar!";
+          } else if (error.code === 'auth/too-many-requests') {
+            alertMsg.innerText = "Terlalu banyak percobaan login gagal. Silakan coba beberapa saat lagi.";
+          } else {
+            alertMsg.innerText = "Gagal login: " + error.message;
+          }
+        });
+    }
+
+    function handleLogout() {
+      const user = auth.currentUser;
+      if (user) {
+        database.ref('active_sessions/' + user.uid).remove().then(() => {
+          auth.signOut();
+        }).catch(() => {
+          auth.signOut();
+        });
+      } else {
+        auth.signOut();
+      }
+    }
+
+    function showLoginModal() {
+      document.getElementById('authModal').classList.remove('hidden');
+      document.getElementById('appContainer').classList.add('hidden');
+      document.getElementById('appContainer').classList.remove('flex');
+    }
+
+    function unlockAppInterface() {
+      document.getElementById('authModal').classList.add('hidden');
+      document.getElementById('appContainer').classList.remove('hidden');
+      document.getElementById('appContainer').classList.add('flex');
+      lucide.createIcons();
+    }
 
     function togglePasswordVisibility() {
       const input = document.getElementById('passcodeInput');
@@ -518,42 +688,9 @@
       lucide.createIcons();
     }
 
-    function handleAuthentication(e) {
-      if (e) e.preventDefault();
-      
-      const inputEl = document.getElementById('passcodeInput');
-      const enteredCode = inputEl.value.trim();
-      const alertBox = document.getElementById('authAlert');
-
-      if (enteredCode === SECRET_ACCESS_KEY) {
-        sessionStorage.setItem('ppm_auth_token', 'GRANTED_2026');
-        alertBox.classList.add('hidden');
-        unlockAppInterface();
-      } else {
-        alertBox.classList.remove('hidden');
-        document.getElementById('authAlertMsg').innerText = "Kode sandi tidak valid! Silakan periksa kembali.";
-        inputEl.value = "";
-        inputEl.focus();
-      }
-    }
-
-    function unlockAppInterface() {
-      document.getElementById('authModal').classList.add('hidden');
-      document.getElementById('appContainer').classList.remove('hidden');
-      document.getElementById('appContainer').classList.add('flex');
-      lucide.createIcons();
-    }
-
-    function lockSession() {
-      sessionStorage.removeItem('ppm_auth_token');
-      document.getElementById('appContainer').classList.add('hidden');
-      document.getElementById('appContainer').classList.remove('flex');
-      document.getElementById('authModal').classList.remove('hidden');
-      document.getElementById('passcodeInput').value = '';
-      document.getElementById('authAlert').classList.add('hidden');
-      lucide.createIcons();
-    }
-
+    // =========================================================================
+    // 4. LOGIKA APLIKASI UTAMA (FORM, CALCULATIONS, SAMPLE DATA, GENERATE)
+    // =========================================================================
     function loadSampleFisika() {
       document.getElementById('jenjang').value = "SMA";
       document.getElementById('kelas').value = "XI (Sebelas)";
@@ -642,12 +779,10 @@
       updateCalculations();
     }
 
-    /* FUNGSI UTAMA: MENENTUKAN ICE BREAKING KONTEKSTUAL BERDASARKAN MAPEL & MATERI */
     function getIceBreakingByContext(mapel, materi, pertemuanKe) {
-      const m = mapel.toLowerCase();
-      const mat = materi.toLowerCase();
+      const m = (mapel || '').toLowerCase();
+      const mat = (materi || '').toLowerCase();
 
-      // CATEGORY 1: PJOK & OLAHRAGA
       if (m.includes('pjok') || m.includes('penjas') || m.includes('olahraga')) {
         if (pertemuanKe === 1) {
           return `Simulasi Gerak "Tepuk Reaksi & Sinyal Peluit ${materi}" (Murid merespons komando gerak sesuai aba-aba materi secara presisi).`;
@@ -658,7 +793,6 @@
         }
       }
 
-      // CATEGORY 2: FISIKA & IPA & KIMIA
       if (m.includes('fisika') || m.includes('ipa') || m.includes('kimia') || m.includes('sains')) {
         if (pertemuanKe === 1) {
           return `Kuis Cepat "Tebak Fenomena & Aksi Reaksi ${materi}" (Murid menebak sebab-akibat fenomena Fisika di papan tulis secara interaktif).`;
@@ -669,7 +803,6 @@
         }
       }
 
-      // CATEGORY 3: MATEMATIKA
       if (m.includes('matematika') || m.includes('mtk')) {
         if (pertemuanKe === 1) {
           return `Game Otak "Tepuk Bilangan Kelipatan & Angka Ajaib" (Fokus pada ketelitian hitung cepat sebelum masuk materi ${materi}).`;
@@ -680,7 +813,6 @@
         }
       }
 
-      // CATEGORY 4: BAHASA (INDONESIA / INGGRIS / DAERAH)
       if (m.includes('bahasa') || m.includes('english') || m.includes('indonesia')) {
         if (pertemuanKe === 1) {
           return `Permainan Kata "Sambung Kata & Kata Kunci ${materi}" (Murid menyusun kalimat spontan menggunakan istilah penting materi).`;
@@ -691,7 +823,6 @@
         }
       }
 
-      // CATEGORY 5: AGAMA / PAI
       if (m.includes('pai') || m.includes('agama') || m.includes('islam')) {
         if (pertemuanKe === 1) {
           return `Aktivitas "Sambung Ayat / Istilah Kebaikan ${materi}" (Saling melengkapi hafalan/istilah penting materi dengan khidmat).`;
@@ -702,7 +833,6 @@
         }
       }
 
-      // CATEGORY GENERAL (DEFAULT UNTUK MAPEL LAINNYA)
       if (pertemuanKe === 1) {
         return `Aktivitas Pemantik "Detektif Konsep & Kuis Cepat ${materi}" (Menguji fokus awal siswa dengan tebak gambar/istilah penting).`;
       } else if (pertemuanKe === 2) {
@@ -715,8 +845,8 @@
     function generatePPM(e) {
       if (e) e.preventDefault();
 
-      if (sessionStorage.getItem('ppm_auth_token') !== 'GRANTED_2026') {
-        lockSession();
+      if (!auth.currentUser) {
+        showLoginModal();
         return;
       }
 
@@ -747,35 +877,35 @@
         btnText.innerText = "Generate Dokumen PPM Resmi";
 
         executePPMGeneration();
-      }, 2000);
+      }, 1500);
     }
 
     function executePPMGeneration() {
       const jenjang = document.getElementById('jenjang').value;
-      const kelas = document.getElementById('kelas').value;
-      const semester = document.getElementById('semester').value;
-      const mapel = document.getElementById('mapel').value;
-      const materi = document.getElementById('materi').value;
+      const kelas = escapeHtml(document.getElementById('kelas').value);
+      const semester = escapeHtml(document.getElementById('semester').value);
+      const mapel = escapeHtml(document.getElementById('mapel').value);
+      const materi = escapeHtml(document.getElementById('materi').value);
       const pertemuanCount = parseInt(document.getElementById('pertemuan').value) || 1;
       const jpPerPertemuan = parseInt(document.getElementById('jpPerPertemuan').value) || 1;
       const mins = getJpMinutes(jenjang);
       
-      const minatMurid = document.getElementById('minatMurid').value || '-';
-      const gayaBelajar = document.getElementById('gayaBelajar').value || '-';
-      const kategoriMurid = document.getElementById('kategoriMurid').value || '-';
-      const modelPembelajaran = document.getElementById('modelPembelajaran').value;
-      const metodePembelajaran = document.getElementById('metodePembelajaran').value || '-';
-      const sarana = document.getElementById('sarana').value || '-';
-      const videoLink = document.getElementById('videoLink').value || 'https://youtu.be/hxiiNPg8zXE';
+      const minatMurid = escapeHtml(document.getElementById('minatMurid').value) || '-';
+      const gayaBelajar = escapeHtml(document.getElementById('gayaBelajar').value) || '-';
+      const kategoriMurid = escapeHtml(document.getElementById('kategoriMurid').value) || '-';
+      const modelPembelajaran = escapeHtml(document.getElementById('modelPembelajaran').value);
+      const metodePembelajaran = escapeHtml(document.getElementById('metodePembelajaran').value) || '-';
+      const sarana = escapeHtml(document.getElementById('sarana').value) || '-';
+      const videoLink = escapeHtml(document.getElementById('videoLink').value) || 'https://youtu.be/hxiiNPg8zXE';
 
-      const cp = document.getElementById('cp').value;
-      const tp = document.getElementById('tp').value;
-      const namaGuru = document.getElementById('namaGuru').value;
-      const nipGuru = document.getElementById('nipGuru').value || '-';
-      const namaKepsek = document.getElementById('namaKepsek').value;
-      const nipKepsek = document.getElementById('nipKepsek').value || '-';
-      const sekolah = document.getElementById('sekolah').value;
-      const instansi = document.getElementById('instansi').value;
+      const cp = escapeHtml(document.getElementById('cp').value);
+      const tp = escapeHtml(document.getElementById('tp').value);
+      const namaGuru = escapeHtml(document.getElementById('namaGuru').value);
+      const nipGuru = escapeHtml(document.getElementById('nipGuru').value) || '-';
+      const namaKepsek = escapeHtml(document.getElementById('namaKepsek').value);
+      const nipKepsek = escapeHtml(document.getElementById('nipKepsek').value) || '-';
+      const sekolah = escapeHtml(document.getElementById('sekolah').value);
+      const instansi = escapeHtml(document.getElementById('instansi').value);
 
       const totalAlokasiStr = `${pertemuanCount} Kali Pertemuan (${jpPerPertemuan} x ${mins} Menit)`;
       const checkedDPL = Array.from(document.querySelectorAll('input[name="dimensi"]:checked')).map(el => el.value);
@@ -783,7 +913,6 @@
       let meetingsHTML = '';
       let mediaAjarRows = '';
       
-      // GENERATOR DINAMIK SESUAI INPUT MATERI USER
       for (let i = 1; i <= pertemuanCount; i++) {
         let subTitle = "";
         let iceBreakingName = getIceBreakingByContext(mapel, materi, i);
@@ -794,7 +923,7 @@
           subTitle = `Pengenalan Konsep Dasar & Orientasi Permasalahan ${materi}`;
           focusTag = `Penguasaan Konsep Dasar, Orientasi Masalah & Identifikasi ${materi}`;
           kegIntiDetail = `
-            <li><b>Kegiatan 1 (Orientasi Masalah):</b> Guru menyajikan stimulus berupa demonstrasi/studi kasus nyata tentang ${materi}. Murid mengamati dan mengidentifikasi permasalahan dasar. (Media Pembelajaran: <a href="${videoLink}" target="_blank" style="color: #1d4ed8; text-decoration: underline;">Tautan Video / Visual</a>)</li>
+            <li><b>Kegiatan 1 (Orientasi Masalah):</b> Guru menyajikan stimulus berupa demonstrasi/studi kasus nyata tentang ${materi}. Murid mengamati dan mengidentifikasi permasalahan dasar. (Media Pembelajaran: <a href="${videoLink}" target="_blank" rel="noopener noreferrer" style="color: #1d4ed8; text-decoration: underline;">Tautan Video / Visual</a>)</li>
             <li><b>Kegiatan 2 (Eksplorasi Konsep):</b> Murid bekerja secara berpasangan atau kelompok kecil untuk mendiskusikan konsep utama ${materi} menggunakan panduan LKM.</li>
             <li><b>Kegiatan 3 (Tantangan Penalaran "Problem Challenge"):</b> Murid menganalisis contoh kasus nyata yang berkaitan dengan ${materi} dan merumuskan hipotesis penyelesaiannya.</li>
           `;
@@ -846,7 +975,7 @@
               <tr>
                 <td style="font-weight: bold; vertical-align: top;">Kegiatan Inti (60 Menit)</td>
                 <td style="vertical-align: top;">
-                  <p style="margin: 0 0 6px 0; font-style: italic; color: #1e40af;"><b>Tautan Media Pembelajaran:</b> <a href="${videoLink}" target="_blank">${videoLink}</a></p>
+                  <p style="margin: 0 0 6px 0; font-style: italic; color: #1e40af;"><b>Tautan Media Pembelajaran:</b> <a href="${videoLink}" target="_blank" rel="noopener noreferrer">${videoLink}</a></p>
                   <ol style="margin: 0; padding-left: 18px;" type="1">
                     ${kegIntiDetail}
                   </ol>
@@ -1351,13 +1480,18 @@
       const content = document.getElementById("outputContainer").innerHTML;
       const sourceHTML = header + content + footer;
 
-      const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+      const blob = new Blob(['\ufeff', sourceHTML], {
+        type: 'application/msword'
+      });
+      
+      const url = URL.createObjectURL(blob);
       const fileDownload = document.createElement("a");
       document.body.appendChild(fileDownload);
-      fileDownload.href = source;
+      fileDownload.href = url;
       fileDownload.download = `Perencanaan_Pembelajaran_Mendalam_${sanitizeName}.doc`;
       fileDownload.click();
       document.body.removeChild(fileDownload);
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
